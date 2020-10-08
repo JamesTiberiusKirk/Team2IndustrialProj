@@ -10,6 +10,9 @@ select check_answer(/*question id*/,/*answer id*/);
 /* generates a random room key which is unique and returns it. Also adds this to a new row in room table */
 select new_room();
 
+/* Retrieve room ID from room KEY */
+select room_id_from_key(/*room KEY*/);
+
 /* Destroy room*/ 
 /* sets the "ended" flag for soft delete and frees the room key */
 call destroy_room_key(/* key of room to destroy*/);
@@ -23,4 +26,17 @@ select user_id_exists(/*user id to check*/);
 select add_user_to_room(/*room ID*/,/*user ID*/);
 
 /* Increment score*/
-call increment_score(/*user ID*/, /* integer amount to increment score by*/)
+call increment_score(/*user ID*/,/*integer amount to increment score by*/)
+
+/* Check a user is in a room */
+select check_user_in_room(/*room ID*/,/*user ID*/)
+
+
+/*
+######## Important ########
+
+- room "ID" is not to be mistaken for room "KEY"
+	- room ID is the autoincremented integer PK
+	- room KEY is the 6 character string (although always made up of numbers, sometimes has leading 0s hence is a string)
+
+*/
