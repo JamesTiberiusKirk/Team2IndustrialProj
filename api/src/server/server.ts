@@ -5,6 +5,9 @@ import * as bodyParser from 'body-parser';
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 
+//import registerRoute from '../routes/register';
+var registerRoute = require('../routes/register')
+
 export class Server {
 
     /* Server conf. */
@@ -48,6 +51,7 @@ export class Server {
         this.app.get('/', (req: Request, res: Response) => {
             return res.send('Hello World');
         })
+        this.app.use('/register', registerRoute);
     }
 
     /**
