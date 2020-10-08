@@ -1,4 +1,7 @@
 import express, {Request, Response, Router} from 'express';
+import {Db} from '../db/db';
+import { ConnectionOptions } from "mysql";
+import { request } from 'http';
 
 export class AnswerRoute {
   public router;
@@ -11,8 +14,12 @@ export class AnswerRoute {
   }
 
   initRoutes() {
+    // this.router.get("/", (req: Request, res: Response) => {
+    //    res.send("Hello world");
+    // });
+
     this.router.get("/", (req: Request, res: Response) => {
-      return res.send("Hello world");
+      
     });
   }
   
