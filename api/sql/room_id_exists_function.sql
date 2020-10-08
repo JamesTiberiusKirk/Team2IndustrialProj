@@ -1,0 +1,12 @@
+CREATE FUNCTION `room_id_exists` (r_id INT)
+RETURNS BOOLEAN
+BEGIN
+
+IF EXISTS(SELECT * FROM `room` WHERE `id` = r_id)
+THEN
+	RETURN 1;
+ELSE
+	RETURN 0;
+END IF;
+
+END
