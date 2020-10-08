@@ -49,7 +49,7 @@ export class Server {
     initRoutes() {
         //Init answer route class and route
         const ansRoute = new AnswerRoute();
-        this.app.use('/answers', ansRoute.router);
+        this.app.use('/answer', ansRoute.router);
         
     }
 
