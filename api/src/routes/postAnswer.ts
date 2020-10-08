@@ -11,7 +11,7 @@ export class AnswerRoute {
   }
 
   initRoutes() {
-    this.router.post("/", (req: Request, res: Response) => {
+    this.router.get("/", (req: Request, res: Response) => {
       return res.send("Hello world");
     });
   }
