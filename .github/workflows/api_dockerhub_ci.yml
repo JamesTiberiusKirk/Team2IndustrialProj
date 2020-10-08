@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: DockerHub CI
+name: DockerHub CI & DigitalOcean CD
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
@@ -33,9 +33,17 @@ jobs:
 
     - name: Docker Login
       env: 
-        DOCKER_USER: ${{secrets.DOCKER_USER}} 
-        DOCKER_PASS: ${{secrets.DOCKER_PASS}} 
+        DOCKER_USER: ${{ secrets.DOCKER_USER }} 
+        DOCKER_PASS: ${{ secrets.DOCKER_PASS }} 
       run: docker login -u $DOCKER_USER -p $DOCKER_PASS
     
     - name: Docker Push
       run: docker push dumitruvulpe/team2ip:latest
+      
+    - name: Updating Docker Deployment
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASS }}
+        script: cd ~/team2ip && ./update-api.sh
