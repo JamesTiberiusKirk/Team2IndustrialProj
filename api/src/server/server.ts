@@ -4,9 +4,7 @@ import * as bodyParser from 'body-parser';
 
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
-
-//import registerRoute from '../routes/register';
-var registerRoute = require('../routes/register')
+import { RegisterRoute } from '../routes/register';
 
 export class Server {
 
@@ -48,10 +46,9 @@ export class Server {
      * Initilising all the routers and routes.
      */
     initRoutes() {
-        this.app.get('/', (req: Request, res: Response) => {
-            return res.send('Hello World');
-        })
-        this.app.use('/register', registerRoute);
+        // Init the registration router class and route
+        const regRoute = new RegisterRoute();
+        this.app.use('/register', regRoute.router);
     }
 
     /**
