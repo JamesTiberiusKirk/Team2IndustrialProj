@@ -20,7 +20,8 @@ export class AnswerRoute {
       var db: Db;
       db = res.locals.db;
 
-      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then((result) => {
+      this.checkAnswer(db, req.body.questID, req.body.ansID, req.body.userID).then((result) => {
+        res.statusCode = 200;
         if( result == 0){
           return res.send('Incorrect answer');
         }
@@ -49,7 +50,7 @@ export class AnswerRoute {
           reject(err); 
         } 
         else {
-          db.conn.query('CALL increment_score( ? , 1 );',[userID])
+          db.conn.query('CALL increment_score( ? , 1 );',[userID]) // increments user score
           return resolve(Number(result)); // return 0 or 1
         }
       });
@@ -64,5 +65,4 @@ export class AnswerRoute {
 //Correct/Incorrect, Updated Score
 
 
-/* Check answer to question */
-/* returns NULL if answer ID doesnt match question, returns 1 if correct, returns 0 if incorrect */
+
