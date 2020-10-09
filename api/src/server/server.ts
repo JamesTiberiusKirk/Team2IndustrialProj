@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser';
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 
-import {AnswerRoute} from '../routes/postAnswer';
+import {AnswerRoute} from '../routes/post.answer';
 
 export class Server {
 
