@@ -1,4 +1,4 @@
-CREATE DEFINER="doadmin"@"%" FUNCTION "add_user_to_room"(r_id INT, u_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `add_user_to_room`(r_id INT, u_id INT) RETURNS BOOLEAN
 BEGIN
 
 IF room_exists(r_id) AND user_exists(u_id)

@@ -1,4 +1,4 @@
-CREATE DEFINER="doadmin"@"%" FUNCTION "new_user"(nickname VARCHAR(45)) RETURNS int
+CREATE FUNCTION `new_user`(nickname VARCHAR(45)) RETURNS int
 BEGIN
 
 DECLARE u_id INT;

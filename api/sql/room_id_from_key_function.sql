@@ -1,4 +1,4 @@
-CREATE DEFINER="doadmin"@"%" FUNCTION "room_id_from_key"(r_key VARCHAR(6)) RETURNS int
+CREATE FUNCTION `room_id_from_key`(r_key VARCHAR(6)) RETURNS INT
 BEGIN
 DECLARE r_id INT;
 
