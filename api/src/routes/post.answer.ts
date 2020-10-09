@@ -5,7 +5,8 @@ import { request } from 'http';
 import { resolve } from 'path';
 import { rejects } from 'assert';
 
-export class AnswerRoute {
+export class AnswerRoute 
+{
   public router;
   /**
    * Constructor.
@@ -22,17 +23,17 @@ export class AnswerRoute {
       var db: Db;
       db = res.locals.db;
 
-      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then((//what do i put here
-      ) => {
+      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then((/**IDK what to put here */) => {
 
         //ToDo: i also dont know what to put here
 
-      }).catch((Error)){
+      }).catch((err) => {
         res.statusCode = 400;
-        return res.send(Error);
+        return res.send(err);
       }
-    });
+    );
   }
+}
   
   /**
    * SQL function call to check if answer from user is correct, update score if correct
