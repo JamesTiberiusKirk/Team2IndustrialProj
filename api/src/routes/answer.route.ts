@@ -1,12 +1,7 @@
-import express, { Request, Response, Router } from 'express';
+import express, { Request, Response } from 'express';
 import { Db } from '../db/db';
-import { ConnectionOptions } from "mysql";
-import { request } from 'http';
-import { resolve } from 'path';
-import { rejects } from 'assert';
 
-export class AnswerRoute 
-{
+export class AnswerRoute {
   public router;
   /**
    * Constructor.
@@ -15,25 +10,30 @@ export class AnswerRoute
     this.router = express.Router();
     this.initRoutes();
   }
-
+  
+  /**
+   * Initialize this router
+   */
   initRoutes() {
-    this.router.post("/", (req: Request, res: Response) => {
-      //    res.send("Hello world");
-      // });
+    this.router.post('/', (req: Request, res: Response) => {
+      
       var db: Db;
       db = res.locals.db;
 
-      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then((/**IDK what to put here */) => {
-
-        //ToDo: i also dont know what to put here
-
+      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then((result) => {
+        if( result == 0){
+          return res.send('Incorrect answer');
+        }
+        else{
+          return res.send('Correct answer');
+        }
       }).catch((err) => {
         res.statusCode = 400;
         return res.send(err);
-      }
-    );
+      });
+    });
   }
-}
+
   
   /**
    * SQL function call to check if answer from user is correct, update score if correct
@@ -46,13 +46,13 @@ export class AnswerRoute
     return new Promise<Number>((resolve, reject) => {
       db.conn.query('select check_answer( ? , ? );', [questID, ansID], (err, result) => {
         if (err) {
-          reject(err);
+          reject(err); 
         } 
         else {
           db.conn.query('CALL increment_score( ? , 1 );',[userID])
-          return resolve(Number(result));
+          return resolve(Number(result)); // return 0 or 1
         }
-      })
+      });
     })
   }
 }
