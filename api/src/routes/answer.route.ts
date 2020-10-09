@@ -20,12 +20,13 @@ export class AnswerRoute {
       var db: Db;
       db = res.locals.db;
 
-      var qid = req.body.qid;
+      var qid = req.body.qid; 
       var aid = req.body.aid;
       var score = req.body.score;
 
       db.checkAnswer(qid, aid).then((result) => {
         res.statusCode = 200;
+        console.log( result );
         if( result == false || result == null){
           return res.send('Incorrect answer');
         }

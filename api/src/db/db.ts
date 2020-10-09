@@ -50,7 +50,7 @@ export class Db {
      * @param aid Answer ID.
      * @returns boolean for the answer.
      */
-    checkAnswer(qid: string, aid: string): Promise<boolean> {
+    checkAnswer(qid: String, aid: String): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             const sql: string = 'SELECT check_answer(?,?) AS result;';
             this.conn.query(sql, [qid, aid], (err, rows: RowDataPacket[]) => {
@@ -200,6 +200,7 @@ export class Db {
                 if (err) reject(err);
                 try {
                     resolve(rows[0].result);
+                    console.log(' ==============' + rows[0].result);
                 } catch (e) {
                     reject(e);
                 }
