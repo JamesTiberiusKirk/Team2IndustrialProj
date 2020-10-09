@@ -1,0 +1,80 @@
+h1 {
+    color: rgb(31, 0, 207);
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 250%;
+  }
+  body {
+    background-color: rgb(167, 250, 250);
+    padding-top: 5vh;
+    text-align: center;
+   
+  }
+  .quiz-container{
+    width: 450px;
+    height: auto;
+    padding: 20px 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 #000;
+    margin: auto;
+}
+  .content {
+    max-width: 500px;
+    margin: auto;
+  }
+  .buttonA {
+    background-color: #f8cb00;
+    border: none;
+    border-radius: 5px; 
+    color: rgb(0, 0, 0);
+    padding: 55px 150px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 #000;
+    }
+  .buttonB {
+    background-color: #f80000;
+    border: none;
+    border-radius: 5px; 
+    color: rgb(0, 0, 0);
+    padding: 55px 150px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 #000;
+    }
+    .buttonC {
+    background-color: #1df800;
+    border: none;
+    border-radius: 5px; 
+    color: rgb(0, 0, 0);
+    padding: 55px 150px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 #000;
+    }
+    .buttonD {
+    background-color: #0057f8;
+    border: none;
+    border-radius: 5px; 
+    color: rgb(0, 0, 0);
+    padding: 55px 150px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 #000;
+    }
