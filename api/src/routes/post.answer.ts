@@ -22,10 +22,10 @@ export class AnswerRoute {
       var db: Db;
       db = res.locals.db;
 
-     
-      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then(() => {
+      this.checkAnswer(res.locals.db, req.body.questID, req.body.ansID, req.body.userID).then((//what do i put here
+      ) => {
 
-        //ToDo
+        //ToDo: i also dont know what to put here
 
       }).catch((Error)){
         res.statusCode = 400;
