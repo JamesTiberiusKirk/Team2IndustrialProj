@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ScoreComponent } from './score/score.component';
-import { HeroesComponent } from './heroes/heroes.component';
+import { LobbyComponent } from './lobby/lobby.component';
+import { QuizComponent } from './quiz/quiz.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ScoreComponent,
-    HeroesComponent
+    LobbyComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,
