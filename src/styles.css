@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+*{margin: 0; padding: 0;}
+
+body{
+    background-color: lightskyblue;
+    padding-top: 10vh;
+}
+
+.startpage-container{
+
+    width: 300px;
+    height: auto;
+    padding: 20px 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 #000;
+    margin: auto;
+}
+
+.startpage-container h1{
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: monospace;
+}
+
+ul.quiz-content{
+list-style-type: none;
+text-align: center;
+font-family: monospace;
+}
+
+ul.quiz-content h2{
+    margin-bottom: 10px;
+}
+
+ul.quiz-content li{
+    width: 300px;
+    margin-bottom: 10px;
+    font-family: monospace;
+}
+
+ul.quiz-content li input{
+    width: 300px;  
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 8px 0px;
+    border: none;
+    background-color:lightgray; 
+    border-radius: 5px;
+}
+
+ul.quiz-content li input[type="button"]{
+    width: 100px;
+    background-color: lightseagreen;
+    color: white;
+    box-shadow: 0 0 10px 0 #000;
+}
