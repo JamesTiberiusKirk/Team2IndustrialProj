@@ -9,8 +9,6 @@ export class Db {
      */
     constructor(dbConf: ConnectionOptions) {
         this.conn = createConnection(dbConf);
-
-
     }
 
     /**

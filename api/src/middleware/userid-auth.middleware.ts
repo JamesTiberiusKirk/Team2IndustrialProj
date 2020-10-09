@@ -11,8 +11,6 @@ export async function checkUserIdMiddleware(req: Request, res: Response, next: N
     if (!roomIdHeader) return res.sendStatus(400);
 
     const result = await db.checkUserInRoom(userIdheader, roomIdHeader);
-    console.log(result);
-    
 
     return result ? next() : res.sendStatus(401);
 }
