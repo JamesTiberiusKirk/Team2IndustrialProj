@@ -20,12 +20,18 @@ export class AnswerRoute {
       var db: Db;
       db = res.locals.db;
 
-      this.checkAnswer(db, req.body.questID, req.body.ansID, req.body.userID).then((result) => {
+      var qid = req.body.qid;
+      var aid = req.body.aid;
+      var score = req.body.score;
+
+      db.checkAnswer(qid, aid).then((result) => {
         res.statusCode = 200;
-        if( result == 0){
+        if( result == false || result == null){
           return res.send('Incorrect answer');
         }
         else{
+          db.incrementScore(score, 1);
+          console.log('score + 1');
           return res.send('Correct answer');
         }
       }).catch((err) => {
@@ -36,33 +42,28 @@ export class AnswerRoute {
   }
 
   
-  /**
-   * SQL function call to check if answer from user is correct, update score if correct
-   * @param db 
-   * @param questID id of question
-   * @param ansID  id of Answer
-   * @param userID id of User
-   */
-  checkAnswer(db: Db, questID: number, ansID: number, userID: number): Promise<Number> {
-    return new Promise<Number>((resolve, reject) => {
-      db.conn.query('select check_answer( ? , ? );', [questID, ansID], (err, result) => {
-        if (err) {
-          reject(err); 
-        } 
-        else {
-          db.conn.query('CALL increment_score( ? , 1 );',[userID]) // increments user score
-          return resolve(Number(result)); // return 0 or 1
-        }
-      });
-    })
-  }
+  // /**
+  //  * SQL function call to check if answer from user is correct, update score if correct
+  //  * @param db 
+  //  * @param questID id of question
+  //  * @param ansID  id of Answer
+  //  * @param userID id of User
+  //  */
+  // checkAnswer(db: Db, questID: number, ansID: number, userID: number): Promise<Number> {
+  //   return new Promise<Number>((resolve, reject) => {
+  //     db.conn.query('select check_answer( ? , ? );', [questID, ansID], (err, result) => {
+  //       if (err) {
+  //         reject(err); 
+  //       } 
+  //       else {
+  //         db.conn.query('CALL increment_score( ? , 1 );',[userID]) // increments user score
+  //         return resolve(Number(result)); // return 0 or 1
+  //       }
+  //     });
+  //   })
+  // }
 }
 
-//Req:
-//QuestionID, answerID, userID, RoomID
-
-//Res:
-//Correct/Incorrect, Updated Score
 
 
 
