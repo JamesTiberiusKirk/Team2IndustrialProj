@@ -50,9 +50,6 @@ export class Server {
         //Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
-        // this.app.get('/', (req: Request, res: Response) => {
-        //     return res.send('Hello World');
-        
     }
 
     /**
