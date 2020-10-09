@@ -137,7 +137,7 @@ export class Db {
      */
     ifRoomExist(id: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            const sql: string = 'SELECT room_id_exits(?) AS result;';
+            const sql: string = 'SELECT room_id_/exits(?) AS result;';
             this.conn.query(sql, [id], ((err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
