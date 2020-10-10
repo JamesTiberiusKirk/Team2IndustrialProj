@@ -27,6 +27,9 @@ export class AnswerRoute {
       db.checkAnswer(qid, aid).then((result) => {
         res.statusCode = 200;
         console.log( result );
+        console.log( qid );
+        console.log( aid );
+
         if( result == false || result == null){
           return res.send('Incorrect answer');
         }
