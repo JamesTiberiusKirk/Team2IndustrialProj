@@ -6,6 +6,8 @@ import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 
 import {AnswerRoute} from '../routes/answer.route';
+import { QuestionsRoute } from '../routes/questions.route';
+import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
 
@@ -52,6 +54,8 @@ export class Server {
         this.app.use('/answer', ansRoute.router);
 
 
+        const questionsRoute = new QuestionsRoute();
+        this.app.use('/questions', checkUserIdMiddleware, questionsRoute.router);
     }
 
     /**
