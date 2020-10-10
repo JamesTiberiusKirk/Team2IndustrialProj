@@ -1,6 +1,5 @@
 import { createConnection, Connection, ConnectionOptions, RowDataPacket } from 'mysql';
 import { Question, Answer, QuestionIndex } from '../models/question.model'
-
 export class Db {
     conn: Connection;
 
@@ -311,6 +310,11 @@ export class Db {
         });
     }
 
+    /**
+     * Returns the amount of questions in a room and the current question
+     * index.
+     * @param roomId room ID.
+     */
     getQuestionIndex(roomId: string): Promise<QuestionIndex> {
         return new Promise((resolve, reject) => {
             const sql: string = `SELECT room.current_question, room.num_questions
