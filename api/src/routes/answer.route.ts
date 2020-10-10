@@ -27,12 +27,12 @@ export class AnswerRoute {
       var db: Db;
       db = res.locals.db;
 
-      var qid = req.body.qid;
-      var aid = req.body.aid;
-      var uid = req.body.uid;
+      const qid = req.body.qid;
+      const aid = req.body.aid;
+      const uid = req.body.uid;
 
       db.checkAnswer(qid, aid).then((result : number) => {
-        res.statusCode = 200;
+        res.sendStatus(200);
        
         if (result == 0 || result == null) {
           return res.send('Incorrect answer');
@@ -42,7 +42,7 @@ export class AnswerRoute {
           return res.send('Correct answer');
         }
       }).catch((err) => {
-        res.statusCode = 400;
+        res.sendStatus(400);
         return res.send(err);
       });
     });
