@@ -1,4 +1,5 @@
 import { createConnection, Connection, ConnectionOptions, RowDataPacket } from 'mysql';
+import { Question } from '../models/question.model'
 
 export class Db {
     conn: Connection;
@@ -227,4 +228,66 @@ export class Db {
             });
         });
     }
+
+    /**
+     * Assigns a new set of questions to the room.
+     * @param id room ID.
+     * @param category category for questions.
+     */
+    assignRoomQuestions(id: string, category: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const sql: string = 'CALL assign_room_questions(?,?);';
+            this.conn.query(sql, [id, category], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                try {
+                    resolve();
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+    }
+
+    /**
+     * Increments the current question for a room.
+     * @param id room ID.
+     */
+    incrementRoomQuestion(id: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const sql: string = 'CALL increment_room_question(?);';
+            this.conn.query(sql, [id], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                try {
+                    resolve();
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+    }
+
+    /**
+     * Gets the current question for a room.
+     * @param id room ID.
+     */
+    getCurrentQuestion(id: string): Promise<Question> {
+        return new Promise<Question>((resolve, reject) => {
+            const sql: string = 'CALL retrieve_current_question(?);';
+            this.conn.query(sql, [id], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                var output:Question;
+                output.id = rows[0].id;
+                output.text = rows[0].text;
+                try {
+                    resolve(output);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+    }
+
+
+
+
 }

@@ -39,7 +39,7 @@ CALL increment_room_question(/*room ID*/)
 
 /* Retrieves the current quetion for a specified room */
 /* Returns the question ID and the question text */
-CALL increment_room_question(/*room ID*/)
+CALL retrieve_current_question(/*room ID*/)
 
 
 /*
