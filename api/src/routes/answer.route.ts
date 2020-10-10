@@ -23,13 +23,11 @@ export class AnswerRoute {
    */
   initCheckAnswer() {
     this.router.post('/', (req: Request, res: Response) => {
+      let db : Db = res.locals.db;
 
-      var db: Db;
-      db = res.locals.db;
-
-      const qid = req.body.qid;
-      const aid = req.body.aid;
-      const uid = req.body.uid;
+      let qid = req.body.qid;
+      let aid = req.body.aid;
+      let uid = req.body.uid;
 
       db.checkAnswer(qid, aid).then((result : number) => {
         res.sendStatus(200);
