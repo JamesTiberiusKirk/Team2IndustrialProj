@@ -1,10 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { RegisterComponent } from './register/register.component';
+import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
+import { ResultComponent } from './result/result.component';
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+export const AppRoutes: Routes = [
+  { path: 'register', component: RegisterComponent },
+  { path: 'quiz-questions', component: QuizQuestionsComponent },
+  { path: 'result', component: ResultComponent },
+  { path: '', redirectTo: '/register', pathMatch: 'full' }
+];
+
