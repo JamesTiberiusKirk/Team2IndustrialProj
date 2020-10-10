@@ -275,7 +275,7 @@ export class Db {
             const sql: string = 'CALL retrieve_current_question(?);';
             this.conn.query(sql, [id], (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
-                var output:Question;
+                const output:Question = {id: rows[0].id, text: rows[0].text};
                 output.id = rows[0].id;
                 output.text = rows[0].text;
                 try {
