@@ -50,7 +50,7 @@ export class Server {
         //Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
-        console.log('route initiated');
+        
         
     }
 
