@@ -57,10 +57,10 @@ export class Db {
                 if (err) reject(err);
                 try {
                     resolve(rows[0].result);
-                    //console.log(rows[0].result);
+                    // console.log(rows[0].result);
                 } catch (e) {
                     reject(e);
-                   //console.log('DB could not connect');
+                   // console.log('DB could not connect');
                 }
             });
         });

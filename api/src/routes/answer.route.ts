@@ -10,7 +10,7 @@ export class AnswerRoute {
     this.router = express.Router();
     this.initRoutes();
   }
-  
+
   /**
    * Initialize this router
    */
@@ -23,16 +23,14 @@ export class AnswerRoute {
    */
   initCheckAnswer() {
     this.router.post('/', (req: Request, res: Response) => {
-      let db : Db = res.locals.db;
-
-      let qid = req.body.qid;
-      let aid = req.body.aid;
-      let uid = req.body.uid;
+      const db : Db = res.locals.db;
+      const qid = req.body.qid;
+      const aid = req.body.aid;
+      const uid = req.body.uid;
 
       db.checkAnswer(qid, aid).then((result : number) => {
         res.sendStatus(200);
-       
-        if (result == 0 || result == null) {
+        if (result === 0 || result === null) {
           return res.send('Incorrect answer');
         }
         else {
