@@ -22,7 +22,7 @@ export class AnswerRoute {
 
       var qid = req.body.qid; 
       var aid = req.body.aid;
-      var score = req.body.score;
+      var uid = req.body.uid;
 
       db.checkAnswer(qid, aid).then((result) => {
         res.statusCode = 200;
@@ -34,7 +34,7 @@ export class AnswerRoute {
           return res.send('Incorrect answer');
         }
         else{
-          db.incrementScore(score, 1);
+          db.incrementScore(uid, 1);
           console.log('score + 1');
           return res.send('Correct answer');
         }
