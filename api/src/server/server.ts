@@ -47,11 +47,11 @@ export class Server {
      * Initilising all the routers and routes.
      */
     initRoutes() {
-        //Init answer route class and route
+        // Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
-        
-        
+
+
     }
 
     /**
