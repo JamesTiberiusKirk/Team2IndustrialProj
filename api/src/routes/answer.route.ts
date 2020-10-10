@@ -31,9 +31,9 @@ export class AnswerRoute {
       var aid = req.body.aid;
       var uid = req.body.uid;
 
-      db.checkAnswer('1', '42').then((result : number) => {
+      db.checkAnswer(qid, aid).then((result : number) => {
         res.statusCode = 200;
-
+       
         if (result == 0 || result == null) {
           return res.send('Incorrect answer');
         }
