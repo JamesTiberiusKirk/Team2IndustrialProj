@@ -57,8 +57,10 @@ export class Db {
                 if (err) reject(err);
                 try {
                     resolve(rows[0].result);
+                    // console.log(rows[0].result);
                 } catch (e) {
                     reject(e);
+                   // console.log('DB could not connect');
                 }
             });
         });
@@ -188,12 +190,12 @@ export class Db {
 
     /**
      * Increments the score of a user.
-     * @param id uer ID.
+     * @param id user ID.
      * @param amount score amount.
      */
     incrementScore(id: string, amount: number): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            const sql: string = 'CALL increment_scroe(?,?);';
+            const sql: string = 'CALL increment_score(?,?);';
             this.conn.query(sql, [id, amount], (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {

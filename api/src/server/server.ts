@@ -5,6 +5,8 @@ import * as bodyParser from 'body-parser';
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 
+import {AnswerRoute} from '../routes/answer.route';
+
 export class Server {
 
     /* Server conf. */
@@ -45,9 +47,11 @@ export class Server {
      * Initilising all the routers and routes.
      */
     initRoutes() {
-        this.app.get('/', (req: Request, res: Response) => {
-            return res.send('Hello World');
-        })
+        // Init answer route class and route
+        const ansRoute = new AnswerRoute();
+        this.app.use('/answer', ansRoute.router);
+
+
     }
 
     /**
