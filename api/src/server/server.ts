@@ -6,6 +6,7 @@ import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 
 import {AnswerRoute} from '../routes/answer.route';
+import {DestroyRoomRoute} from '../routes/destroy-room.route'
 
 export class Server {
 
@@ -51,6 +52,9 @@ export class Server {
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
 
+        // Init destroy room route
+        const destRoomRoute = new DestroyRoomRoute();
+        this.app.use('/destroy-room', destRoomRoute.router);
 
     }
 
