@@ -6,6 +6,8 @@ import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 import { RegisterRoute } from '../routes/register';
 
+import {AnswerRoute} from '../routes/answer.route';
+
 export class Server {
 
     /* Server conf. */
@@ -46,9 +48,13 @@ export class Server {
      * Initilising all the routers and routes.
      */
     initRoutes() {
-        // Init the registration router class and route
+        // Init the registration route class and route
         const regRoute = new RegisterRoute();
         this.app.use('/register', regRoute.router);
+        // Init answer route class and route
+        const ansRoute = new AnswerRoute();
+        this.app.use('/answer', ansRoute.router);
+
     }
 
     /**
