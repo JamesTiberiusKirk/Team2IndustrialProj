@@ -26,7 +26,6 @@ export class RegisterRoute {
                 const result : User = { user_id: userID, nick: nick};
                 return res.send(result);
             } catch (error) {
-                console.log(error);
                 return res.sendStatus(500);
             }
         })
