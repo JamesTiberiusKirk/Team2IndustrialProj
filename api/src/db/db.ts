@@ -276,8 +276,8 @@ export class Db {
                 if (err) reject(err);
                 try {
                     const output: Question = { id: rows[0].id, text: rows[0].text };
-                    // output.id = rows[0].id;
-                    // output.text = rows[0].text;
+                    output.id = rows[0].id;
+                    output.text = rows[0].text;
                     resolve(output);
                 } catch (e) {
                     reject(e);
