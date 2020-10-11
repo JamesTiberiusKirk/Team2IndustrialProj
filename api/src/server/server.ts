@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
-import { RegisterRoute } from '../routes/register';
+import { RegisterRoute } from '../routes/register.route';
 
 import {AnswerRoute} from '../routes/answer.route';
 
