@@ -9,7 +9,7 @@
 Body:
 ```json
 {
-"nick":"user's nickname" 
+    "nick":"user's nickname" 
 }
 ```
 ### Response:

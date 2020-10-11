@@ -1,6 +1,6 @@
 import express, {Request, Response, Router} from 'express';
 import { Db } from '../db/db';
-import { User } from '../models/user.model';
+import { UserResponse } from '../models/user.model';
 
 export class RegisterRoute {
 
@@ -23,7 +23,7 @@ export class RegisterRoute {
             try {
                 const userID = await db.newUser(nick);
                 //sending back a User JSON in case the nickname needs restrictions in the future
-                const result : User = { user_id: userID, nick: nick};
+                const result : UserResponse = { user_id: userID, nick: nick};
                 return res.send(result);
             } catch (error) {
                 return res.sendStatus(500);
