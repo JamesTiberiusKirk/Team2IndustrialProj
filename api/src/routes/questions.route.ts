@@ -25,6 +25,7 @@ export class QuestionsRoute {
             try {
                 const questionIndex: QuestionIndex = await db.getQuestionIndex(roomId);
                 if (questionIndex.index >= questionIndex.outOf){
+                    await db.destroyRoomById(roomId);
                     return res.status(400).send('last question was reached');
                 }
 
