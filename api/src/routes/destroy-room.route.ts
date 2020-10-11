@@ -26,14 +26,21 @@ export class DestroyRoomRoute {
       const db : Db = res.locals.db;
       const uid: string = req.body.uid;
       const rkey: string = req.body.rkey;
-
-      db.destroyRoomByKey(rkey).then(()=>{
-        res.sendStatus(200);
-        return res.send("Room destroyed");
-      }).catch((err) => {
+      console.log(req.body);
+      db.getRoomIdFromKey(rkey).then((rid:string)=>{
+        db.destroyRoomById(rid).then(()=>{
+          res.sendStatus(200);
+          return res.send("Room destroyed");
+        }).catch((err) => {
+          res.sendStatus(400);
+          return res.send(err);
+        });
+      }).catch((err)=>{
         res.sendStatus(400);
         return res.send(err);
-      });
+      })
+
+
 
     });
   }
