@@ -2,7 +2,7 @@
 
 ## Questions Request
 - `GET /questions/next_question`
-- This endpoint is responsible or returning the next question in the list
+- This endpoint is responsible for returning the next question in the list
     - If there are no more questions, the room will be destroyed
 ### Request:
 
