@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
+import { RegisterRoute } from '../routes/register.route';
 
 import {AnswerRoute} from '../routes/answer.route';
 
@@ -47,10 +48,12 @@ export class Server {
      * Initilising all the routers and routes.
      */
     initRoutes() {
+        // Init the registration route class and route
+        const regRoute = new RegisterRoute();
+        this.app.use('/register', regRoute.router);
         // Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
-
 
     }
 
