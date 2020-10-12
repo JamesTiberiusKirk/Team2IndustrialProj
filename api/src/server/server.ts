@@ -8,6 +8,8 @@ import { RegisterRoute } from '../routes/register.route';
 
 import {AnswerRoute} from '../routes/answer.route';
 import { QuestionsRoute } from '../routes/questions.route';
+import { NewRoomRoute } from '../routes/newroom.route';
+import { JoinRoomRoute } from '../routes/joinroom.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
@@ -53,6 +55,13 @@ export class Server {
         // Init the registration route class and route
         const regRoute = new RegisterRoute();
         this.app.use('/register', regRoute.router);
+
+        const newRoomRoute = new NewRoomRoute();
+        this.app.use('/register', newRoomRoute.router);
+
+        const joinRoomRoute = new JoinRoomRoute();
+        this.app.use('/register', joinRoomRoute.router);
+
         // Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);

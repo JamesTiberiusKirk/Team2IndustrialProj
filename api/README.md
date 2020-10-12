@@ -25,6 +25,59 @@ Body:
 }
 ```
 
+## Room Creation Request
+- `POST /register/new_room`
+- This endpoint is for creating a new room and having questions assigned to it.
+    - The user sending the request does not automatically join; see /register/join_room below
+
+### Request:
+
+Headers:
+```
+{
+user-id:    12345
+}
+```
+### Response:
+Status code: 
+- 200 SUCCESSFUL
+- 500 something went wrong
+
+Body:
+```json
+{
+    "room_id":"1234",
+    "room_key":"123456",
+    "question_count":"10"
+}
+```
+
+## Room Join Request
+- `POST /register/join_room`
+- This endpoint is for the user to join an existing room using its key
+
+### Request:
+
+Headers:
+```
+{
+user-id:    12345
+}
+```
+
+Body:
+```json
+{
+    "room_key":"123456",
+}
+```
+
+### Response:
+Status code: 
+- 200 SUCCESSFUL
+- 400 The requested user or room could not be found in the database
+- 500 something went wrong
+
 ## Questions Request
 - `GET /questions/next_question`
 - This endpoint is responsible for returning the next question in the list
