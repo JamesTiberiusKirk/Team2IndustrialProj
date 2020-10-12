@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<div class="col s8 offset-s2">
+  <h2 class="header">Quiz Completed!</h2>
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="../../assets/trophy.png" style="width: 250px; height: 250px;" />
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <h4>Caoilainn McCrory</h4>
+        <h3>6/10</h3>
+        <span>Time Elapsed: 2 minutes</span>
+      </div>
+      <div class="card-action">
+        <button class="btn" (click)="onSubmit()">Submit</button>
+      </div>
+    </div>
+    <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="restart()">
+      <i class="material-icons">replay</i>
+    </a>
+  </div>
+</div>
