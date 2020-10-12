@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col s6 offset-s3">
+    <div class="card">
+      <div>
+        <h2 style="padding-left: 70px; padding-top: 20px;">Quiz</h2>
+      </div>
+      <div class="col s6">
+        <img src="/assets/question_marks.png" style="width:300px; height:200px; float: right;
+             position: absolute; right: 0%; top: -2px;" class="offset-s3"/>
+      </div>
+      <div class="card-content">
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(GameId.value, Uname.value)">
+          <div class="row">
+            <div class="input-field col s9">
+              <i class="material-icons prefix">dialpad</i>
+              <input type="number" name="GameId" #GameId ngModel required/>
+              <label>Game ID</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s9">
+              <i class="material-icons prefix">account_circle</i>
+              <input type="text" name="Uname" #Uname ngModel required/>
+              <label>Username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button class="btn-large btn-submit" type="submit" [disabled]="!registerForm.valid">Start</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

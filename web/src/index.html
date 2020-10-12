@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizApp</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+  <!-- Toolbar -->
+  <div class="toolbar" role="banner">
+    <div class="alignleft"><h3>Quiz App!</h3></div>
+    <div class="spacer"></div>
+    <div class="alignright"><h3>Score_Placeholder</h3></div>
+
+    </a>
+  </div>
+  <div class="startpage-container">
+    <h1>QUIZ-APP</h1>
+    <ul class="quiz-content">
+      <h2>NAME</h2>
+      <li><input type="text" name="User temp ID" placeholder="Enter Name Here"></li>
+      <h2>ROOM CODE</h2>
+      <li><input type="text" name="room code ID" placeholder="Enter Room Code"></li>
+      <form action="quiz.component.html">
+        <li><input type="button" name="create game" value="Create Game"></li>
+      </form>
+      <form action="/.lobby.component.html">
+        <li><input type="button" name="join room" value="Join A Room"></li>
+      </form>
+    </ul>
+  </div>
+</body>
+</html>
+
+<head>
+  <meta charset="utf-8">
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</body>
