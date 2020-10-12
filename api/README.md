@@ -115,6 +115,35 @@ Body:
 }
 ```
 
+## User Answer Response
+- `POST /answer/`
+- This endpoint is responsible for checking answer is correct or incorrect. It increments user score when correct
+
+### Request
+
+Body:
+```json
+{
+    "qid":"1", 
+    "aid":"42 ",
+    "uid": "12345",
+}
+```
+### Response
+Status Code:
+- 200 SUCCESSFUL
+- 400 
+    - Database query error or user input error
+    - qid or aid not found in DB
+
+Body:
+```json
+{
+    "Incorrect",
+    "Correct" , 
+}
+```
+
 <!-- 
 ## Mock Route Template
 - `POST /route/someroute?userid=1234`
