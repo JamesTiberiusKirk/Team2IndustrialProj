@@ -4,9 +4,13 @@ import * as bodyParser from 'body-parser';
 
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
+import { RegisterRoute } from '../routes/register.route';
 
 import {AnswerRoute} from '../routes/answer.route';
 import {DestroyRoomRoute} from '../routes/destroy-room.route'
+import { QuestionsRoute } from '../routes/questions.route';
+import { NewRoomRoute } from '../routes/newroom.route';
+import { JoinRoomRoute } from '../routes/joinroom.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
@@ -49,6 +53,16 @@ export class Server {
      * Initilising all the routers and routes.
      */
     initRoutes() {
+        // Init the registration route class and route
+        const regRoute = new RegisterRoute();
+        this.app.use('/register', regRoute.router);
+
+        const newRoomRoute = new NewRoomRoute();
+        this.app.use('/register', newRoomRoute.router);
+
+        const joinRoomRoute = new JoinRoomRoute();
+        this.app.use('/register', joinRoomRoute.router);
+
         // Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
@@ -57,6 +71,8 @@ export class Server {
         const destRoomRoute = new DestroyRoomRoute();
         this.app.use('/destroy-room', checkUserIdMiddleware, destRoomRoute.router);
 
+        const questionsRoute = new QuestionsRoute();
+        this.app.use('/questions', checkUserIdMiddleware, questionsRoute.router);
     }
 
     /**

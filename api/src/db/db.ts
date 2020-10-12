@@ -1,5 +1,5 @@
 import { createConnection, Connection, ConnectionOptions, RowDataPacket } from 'mysql';
-
+import { Question, Answer, QuestionIndex } from '../models/question.model'
 export class Db {
     conn: Connection;
 
@@ -60,7 +60,7 @@ export class Db {
                     // console.log(rows[0].result);
                 } catch (e) {
                     reject(e);
-                   // console.log('DB could not connect');
+                    // console.log('DB could not connect');
                 }
             });
         });
@@ -171,15 +171,16 @@ export class Db {
 
     /**
      * Adds user to room.
-     * @param id user ID.
+     * @param userID user ID.
+     * @param roomID room ID.
      */
-    addUserToRoom(id: string): Promise<any> {
+    addUserToRoom(userID: string, roomID: string): Promise<boolean> {
         return new Promise<any>((resolve, reject) => {
             const sql: string = 'SELECT add_user_to_room(?,?) AS result;';
-            this.conn.query(sql, [id], ((err, rows: RowDataPacket[]) => {
+            this.conn.query(sql, [roomID, userID], ((err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(rows[0].result);
+                    resolve(Boolean (rows[0].result));
                 } catch (e) {
                     reject(e);
                 }
@@ -227,4 +228,109 @@ export class Db {
             });
         });
     }
+
+    /**
+     * Assigns a new set of questions to the room.
+     * @param id room ID.
+     * @param category category for questions.
+     */
+    assignRoomQuestions(id: string, category: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const sql: string = 'CALL assign_room_questions(?,?);';
+            this.conn.query(sql, [id, category], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                try {
+                    resolve();
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+    }
+
+    /**
+     * Increments the current question for a room.
+     * @param id room ID.
+     */
+    incrementRoomQuestion(id: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const sql: string = 'CALL increment_room_question(?);';
+            this.conn.query(sql, [id], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                try {
+                    resolve();
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+    }
+
+    /**
+     * Gets the current question for a room.
+     * @param id room ID.
+     */
+    getCurrentQuestion(id: string): Promise<Question> {
+        return new Promise<Question>((resolve, reject) => {
+            const sql: string = 'CALL retrieve_current_question(?);';
+            this.conn.query(sql, [id], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                try {
+                    const output: Question = { id: rows[0].id, text: rows[0].text };
+                    output.id = rows[0].id;
+                    output.text = rows[0].text;
+                    resolve(output);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+    }
+
+
+    /**
+     * Gets all answers for a specific question.
+     * @param questionId question ID.
+     */
+    getAnswers(questionId: string): Promise<Answer[]> {
+        return new Promise((resolve, reject) => {
+            const sql: string = 'SELECT answer.id, answer.text FROM answer WHERE answer.id=?;';
+            this.conn.query(sql, [questionId], (err, rows: RowDataPacket[]) => {
+                if (err) reject(err);
+                try {
+                    const result: Answer[] = [] as Answer[];
+                    rows.forEach(r => {
+                        result.push({ id: String(r.id), text: r.text });
+                    });
+                    resolve(result);
+                } catch (e) {
+                    reject(e)
+                }
+
+            })
+        });
+    }
+
+    /**
+     * Returns the amount of questions in a room and the current question
+     * index.
+     * @param roomId room ID.
+     */
+    getQuestionIndex(roomId: string): Promise<QuestionIndex> {
+        return new Promise((resolve, reject) => {
+            const sql: string = `SELECT room.current_question, room.num_questions
+            FROM room WHERE room.id=?;`;
+            this.conn.query(sql, [roomId], (err, rows: RowDataPacket[]) => {
+                if(err)reject(err);
+                try{
+                    resolve({outOf:rows[0].num_questions, index: rows[0].current_question});
+                }catch(e){
+                    reject(e);
+                }
+
+            })
+        });
+
+    }
+
 }
