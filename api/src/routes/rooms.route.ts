@@ -40,7 +40,7 @@ export class NewRoomRoute {
                     {minimumIntegerDigits: NewRoomRoute.ROOM_KEY_LENGTH});
 
                 // um it would probably be better to get both at once without two selects but tis what it is
-                //this should maybe return a number?
+                //this should maybe return a number instead?
                 const roomID = await db.getRoomIdFromKey(roomKey);
 
                 //assign 10 random questions ro the room

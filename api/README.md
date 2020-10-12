@@ -41,7 +41,6 @@ user-id:    12345
 ### Response:
 Status code: 
 - 200 SUCCESSFUL
-- 400 The requested user or room could not be found in the database
 - 500 something went wrong
 
 Body:
@@ -76,6 +75,8 @@ Body:
 ### Response:
 Status code: 
 - 200 SUCCESSFUL
+- 400 The requested user or room could not be found in the database
+- 500 something went wrong
 
 ## Questions Request
 - `GET /questions/next_question`
