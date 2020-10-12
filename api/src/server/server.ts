@@ -8,7 +8,8 @@ import { RegisterRoute } from '../routes/register.route';
 
 import {AnswerRoute} from '../routes/answer.route';
 import { QuestionsRoute } from '../routes/questions.route';
-import { NewRoomRoute, JoinRoomRoute } from '../routes/rooms.route';
+import { NewRoomRoute } from '../routes/newroom.route';
+import { JoinRoomRoute } from '../routes/joinroom.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
