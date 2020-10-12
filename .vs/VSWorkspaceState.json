@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\lobby"
+    "\\src\\app\\lobby",
+    "\\src\\app\\navbar"
   ],
-  "SelectedNode": "\\src\\index.html",
+  "SelectedNode": "\\src\\app\\quiz",
   "PreviewInSolutionExplorer": false
 }
