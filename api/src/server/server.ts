@@ -7,6 +7,7 @@ import { Db } from '../db/db';
 import { RegisterRoute } from '../routes/register.route';
 
 import {AnswerRoute} from '../routes/answer.route';
+import {DestroyRoomRoute} from '../routes/destroy-room.route'
 import { QuestionsRoute } from '../routes/questions.route';
 import { NewRoomRoute } from '../routes/newroom.route';
 import { JoinRoomRoute } from '../routes/joinroom.route';
@@ -65,6 +66,10 @@ export class Server {
         // Init answer route class and route
         const ansRoute = new AnswerRoute();
         this.app.use('/answer', ansRoute.router);
+
+        // Init destroy room route
+        const destRoomRoute = new DestroyRoomRoute();
+        this.app.use('/destroy-room', checkUserIdMiddleware, destRoomRoute.router);
 
         const questionsRoute = new QuestionsRoute();
         this.app.use('/questions', checkUserIdMiddleware, questionsRoute.router);

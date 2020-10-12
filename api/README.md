@@ -150,4 +150,20 @@ Body:
 Headers:
 ```
 SomeHeaders:    SomeHeaderValues
-``` -->
+```
+
+## Destroy Room
+- POST /destroy-room
+- This route destroys a room when called with a valid user-id and and room-id. 
+
+### Request 
+Headers:
+```
+user-id:    123
+room-id:     123456
+```
+### Resolve:
+Status code: 
+- 200 SUCCESFUL
+- 400 Bad Request
+- 401 Unauthorized 
