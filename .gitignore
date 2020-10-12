@@ -1,18 +1,20 @@
+*/node_modules/*
+api/dist
+api/.env
+
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
-/out-tsc
+web/dist
+web/tmp
+web/out-tsc
 # Only exists if Bazel was run
-/bazel-out
-
-# dependencies
-/node_modules
+web/bazel-out
 
 # profiling files
-chrome-profiler-events*.json
-speed-measure-plugin*.json
+web/chrome-profiler-events*.json
+web/speed-measure-plugin*.json
 
 # IDEs and editors
 /.idea
@@ -32,14 +34,14 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
+web/.sass-cache
+web/connect.lock
+web/coverage
+web/libpeerconnection.log
+web/npm-debug.log
+web/yarn-error.log
+web/testem.log
+web/typings
 
 # System Files
 .DS_Store
