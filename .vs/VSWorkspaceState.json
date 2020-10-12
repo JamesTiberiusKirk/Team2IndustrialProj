@@ -3,8 +3,8 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\heroes"
+    "\\src\\app\\lobby"
   ],
-  "SelectedNode": "\\src\\app\\heroes\\heroes.component.html",
+  "SelectedNode": "\\src\\index.html",
   "PreviewInSolutionExplorer": false
 }
