@@ -139,8 +139,8 @@ Status Code:
 Body:
 ```json
 {
-    "Incorrect",
-    "Correct" , 
+    "Incorrect"
+    "Correct" 
 }
 ```
 
