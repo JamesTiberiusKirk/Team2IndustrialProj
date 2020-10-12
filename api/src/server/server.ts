@@ -7,6 +7,7 @@ import { Db } from '../db/db';
 
 import {AnswerRoute} from '../routes/answer.route';
 import {DestroyRoomRoute} from '../routes/destroy-room.route'
+import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
 
@@ -54,7 +55,7 @@ export class Server {
 
         // Init destroy room route
         const destRoomRoute = new DestroyRoomRoute();
-        this.app.use('/destroy-room', destRoomRoute.router);
+        this.app.use('/destroy-room', checkUserIdMiddleware, destRoomRoute.router);
 
     }
 

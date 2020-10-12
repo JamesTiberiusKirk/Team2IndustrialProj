@@ -26,18 +26,16 @@ export class DestroyRoomRoute {
       const db : Db = res.locals.db;
       const uid: string = req.header('user-id');
       const rid: string = req.header('room-id');
-      console.log(rid);
+
       db.destroyRoomById(rid).then(()=>{
-        res.sendStatus(200);
+        res.status(200);
         return res.send("Room destroyed");
       }).catch((err) => {
         console.log(err);
-        res.sendStatus(400);
+        res.status(400);
         return res.send(err);
       });
-
-
-
+      
     });
   }
 }
