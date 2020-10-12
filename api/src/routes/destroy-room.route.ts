@@ -31,11 +31,10 @@ export class DestroyRoomRoute {
         res.status(200);
         return res.send("Room destroyed");
       }).catch((err) => {
-        console.log(err);
         res.status(400);
         return res.send(err);
       });
-      
+
     });
   }
 }
