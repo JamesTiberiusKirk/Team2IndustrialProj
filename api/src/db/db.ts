@@ -171,15 +171,16 @@ export class Db {
 
     /**
      * Adds user to room.
-     * @param id user ID.
+     * @param userID user ID.
+     * @param roomID room ID.
      */
-    addUserToRoom(id: string): Promise<any> {
+    addUserToRoom(userID: string, roomID: string): Promise<boolean> {
         return new Promise<any>((resolve, reject) => {
             const sql: string = 'SELECT add_user_to_room(?,?) AS result;';
-            this.conn.query(sql, [id], ((err, rows: RowDataPacket[]) => {
+            this.conn.query(sql, [roomID, userID], ((err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(rows[0].result);
+                    resolve(Boolean (rows[0].result));
                 } catch (e) {
                     reject(e);
                 }
