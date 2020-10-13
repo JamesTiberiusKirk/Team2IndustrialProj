@@ -8,6 +8,7 @@ import { Db } from '../db/db';
 import { RegisterRoute } from '../routes/register.route';
 import { QuestionsRoute } from '../routes/questions.route';
 import { RoomRoute } from '../routes/room.route';
+import { ScoresRoute } from '../routes/scores.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
@@ -61,6 +62,10 @@ export class Server {
         // Init the questions router.
         const questionsRoute = new QuestionsRoute();
         this.app.use('/questions', checkUserIdMiddleware, questionsRoute.router);
+
+        // Init the scores router.
+        const scoresRoute = new ScoresRoute();
+        this.app.use('/scores', checkUserIdMiddleware, scoresRoute.router);
     }
 
     /**
