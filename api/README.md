@@ -26,7 +26,7 @@ Body:
 ```
 
 ## Room Creation Request
-- `POST /register/new_room`
+- `POST /rooms/new_room`
 - This endpoint is for creating a new room and having questions assigned to it.
     - The user sending the request does not automatically join; see /register/join_room below
 
@@ -53,7 +53,7 @@ Body:
 ```
 
 ## Room Join Request
-- `POST /register/join_room`
+- `POST /rooms/join_room`
 - This endpoint is for the user to join an existing room using its key
 
 ### Request:
@@ -79,7 +79,7 @@ Status code:
 - 500 something went wrong
 
 ## Questions Request
-- `GET /questions/next_question`
+- `GET /questions/next`
 - This endpoint is responsible for returning the next question in the list
     - If there are no more questions, the room will be destroyed
 ### Request:
@@ -116,7 +116,7 @@ Body:
 ```
 
 ## User Answer Response
-- `POST /answer/`
+- `POST /questions/answer`
 - This endpoint is responsible for checking answer is correct or incorrect. It increments user score when correct
 
 ### Request
