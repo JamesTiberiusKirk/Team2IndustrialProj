@@ -1,6 +1,7 @@
 import express, { Response, Request, NextFunction } from 'express';
 import morgan from 'morgan';
 import * as bodyParser from 'body-parser';
+import cors from 'cors';
 
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
@@ -33,7 +34,7 @@ export class Server {
     }
 
     /**
-     * Initialising the server.
+     * Init express server.
      */
     initServer(): Promise<void> {
         return new Promise((resolve) => {
@@ -66,14 +67,38 @@ export class Server {
      * Initialising middleware.
      */
     initMiddleware() {
+        this.disableServerCors();
         this.app.use(morgan('tiny'));
         this.app.use(bodyParser.json());
+
 
         // Injecting the database into each request
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.locals.db = this.db;
             next();
         })
+    }
+
+
+    /**
+     * This is for disabling CORS request.
+     */
+    disableServerCors() {
+        const options: cors.CorsOptions = {
+            allowedHeaders: [
+                'Origin',
+                'X-Requested-With',
+                'Content-Type',
+                'Accept',
+                'X-Access-Token',
+            ],
+            credentials: true,
+            methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+        };
+
+        this.app.use(cors(options));
+        this.app.options('*', cors(options));
     }
 }
 
