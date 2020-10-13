@@ -1,16 +1,13 @@
 import express, { Response, Request, NextFunction } from 'express';
 import morgan from 'morgan';
 import * as bodyParser from 'body-parser';
+import cors from 'cors';
 
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 import { RegisterRoute } from '../routes/register.route';
-
-import {AnswerRoute} from '../routes/answer.route';
-import {DestroyRoomRoute} from '../routes/destroy-room.route'
 import { QuestionsRoute } from '../routes/questions.route';
-import { NewRoomRoute } from '../routes/newroom.route';
-import { JoinRoomRoute } from '../routes/joinroom.route';
+import { RoomRoute } from '../routes/room.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
@@ -37,7 +34,7 @@ export class Server {
     }
 
     /**
-     * Initialising the server.
+     * Init express server.
      */
     initServer(): Promise<void> {
         return new Promise((resolve) => {
@@ -57,20 +54,11 @@ export class Server {
         const regRoute = new RegisterRoute();
         this.app.use('/register', regRoute.router);
 
-        const newRoomRoute = new NewRoomRoute();
-        this.app.use('/register', newRoomRoute.router);
+        // Init the rooms router
+        const roomRoute = new RoomRoute();
+        this.app.use('/rooms', roomRoute.router);
 
-        const joinRoomRoute = new JoinRoomRoute();
-        this.app.use('/register', joinRoomRoute.router);
-
-        // Init answer route class and route
-        const ansRoute = new AnswerRoute();
-        this.app.use('/answer', ansRoute.router);
-
-        // Init destroy room route
-        const destRoomRoute = new DestroyRoomRoute();
-        this.app.use('/destroy-room', checkUserIdMiddleware, destRoomRoute.router);
-
+        // Init the questions router.
         const questionsRoute = new QuestionsRoute();
         this.app.use('/questions', checkUserIdMiddleware, questionsRoute.router);
     }
@@ -79,14 +67,38 @@ export class Server {
      * Initialising middleware.
      */
     initMiddleware() {
+        this.disableServerCors();
         this.app.use(morgan('tiny'));
         this.app.use(bodyParser.json());
+
 
         // Injecting the database into each request
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.locals.db = this.db;
             next();
         })
+    }
+
+
+    /**
+     * This is for disabling CORS request.
+     */
+    disableServerCors() {
+        const options: cors.CorsOptions = {
+            allowedHeaders: [
+                'Origin',
+                'X-Requested-With',
+                'Content-Type',
+                'Accept',
+                'X-Access-Token',
+            ],
+            credentials: true,
+            methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+        };
+
+        this.app.use(cors(options));
+        this.app.options('*', cors(options));
     }
 }
 
