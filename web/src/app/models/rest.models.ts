@@ -14,3 +14,21 @@ export interface Room {
     roomKey: string;
     questionCount: number;
 }
+
+
+/**
+ * Interface for storing the question and the answer options.
+ */
+export interface Question {
+    id: string;
+    text: string;
+    answerOptions: AnswerOptions[];
+}
+
+/**
+ * Interface for each answer option.
+ */
+export interface AnswerOptions {
+    id: string;
+    text: string;
+}
