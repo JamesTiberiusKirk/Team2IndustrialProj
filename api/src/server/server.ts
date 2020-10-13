@@ -5,12 +5,8 @@ import * as bodyParser from 'body-parser';
 import { ServConf } from '../models/conf.model';
 import { Db } from '../db/db';
 import { RegisterRoute } from '../routes/register.route';
-
-import {AnswerRoute} from '../routes/answer.route';
-import {DestroyRoomRoute} from '../routes/destroy-room.route'
 import { QuestionsRoute } from '../routes/questions.route';
-import { NewRoomRoute } from '../routes/newroom.route';
-import { JoinRoomRoute } from '../routes/joinroom.route';
+import { RoomRoute } from '../routes/room.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
@@ -57,20 +53,11 @@ export class Server {
         const regRoute = new RegisterRoute();
         this.app.use('/register', regRoute.router);
 
-        const newRoomRoute = new NewRoomRoute();
-        this.app.use('/register', newRoomRoute.router);
+        // Init the rooms router
+        const roomRoute = new RoomRoute();
+        this.app.use('/rooms', roomRoute.router);
 
-        const joinRoomRoute = new JoinRoomRoute();
-        this.app.use('/register', joinRoomRoute.router);
-
-        // Init answer route class and route
-        const ansRoute = new AnswerRoute();
-        this.app.use('/answer', ansRoute.router);
-
-        // Init destroy room route
-        const destRoomRoute = new DestroyRoomRoute();
-        this.app.use('/destroy-room', checkUserIdMiddleware, destRoomRoute.router);
-
+        // Init the questions router.
         const questionsRoute = new QuestionsRoute();
         this.app.use('/questions', checkUserIdMiddleware, questionsRoute.router);
     }
