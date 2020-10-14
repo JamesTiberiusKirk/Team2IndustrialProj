@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { QuestionAndAnswerResponse, QuestionIndex } from '../models/question.model';
+import { AnswerResultResponse, QuestionAndAnswerResponse, QuestionIndex } from '../models/question.model';
 import { Db } from '../db/db';
 import { Answer, Question } from '../models/question.model';
 
@@ -41,25 +41,24 @@ export class QuestionsRoute {
         });
 
         // Init route for answer
-        this.router.post('/answer', (req: Request, res: Response) => {
+        this.router.post('/answer', async (req: Request, res: Response) => {
             const db: Db = res.locals.db;
             const qid = req.body.qid;
             const aid = req.body.aid;
-            const uid = req.body.uid;
+            const uid = req.header('user-id');
 
-            db.checkAnswer(qid, aid).then((result: boolean) => {
-                res.sendStatus(200);
-                if (result === false || result === null) {
-                    return res.send('Incorrect answer');
+            try {
+                const wasRight: boolean = await db.checkAnswer(qid, aid);
+
+                if (wasRight === null) {
+                    return res.sendStatus(400);
+                } else {
+                    const result: AnswerResultResponse = { correct: wasRight };
+                    return res.send(result);
                 }
-                else {
-                    db.incrementScore(uid, 1);
-                    return res.send('Correct answer');
-                }
-            }).catch((err) => {
-                res.sendStatus(400);
-                return res.send(err);
-            });
+            } catch (error) {
+                return res.sendStatus(500);
+            }
         });
     }
 }

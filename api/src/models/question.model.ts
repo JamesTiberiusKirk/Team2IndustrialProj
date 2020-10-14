@@ -17,3 +17,7 @@ export interface QuestionIndex {
     outOf: string;
     index: string;
 }
+
+export interface AnswerResultResponse {
+    correct: boolean;
+}
