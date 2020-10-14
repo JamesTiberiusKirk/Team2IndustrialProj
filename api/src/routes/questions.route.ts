@@ -53,6 +53,9 @@ export class QuestionsRoute {
                 if (wasRight === null) {
                     return res.sendStatus(400);
                 } else {
+                    if (wasRight) {
+                        db.incrementScore(uid, 1);
+                    }
                     const result: AnswerResultResponse = { correct: wasRight };
                     return res.send(result);
                 }
