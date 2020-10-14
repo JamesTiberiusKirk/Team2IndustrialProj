@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS "testdb"
-CREATE DATABASE "testdb" 
+DROP DATABASE IF EXISTS `testdb`
+CREATE DATABASE `testdb` 
 USE `testdb`;
 
 --
@@ -12,7 +12,7 @@ CREATE TABLE `category` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Stores the question categories';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 INSERT INTO `category` VALUES (1,'general');
 
@@ -45,7 +45,7 @@ CREATE TABLE `answer` (
   PRIMARY KEY (`id`),
   KEY `question_id_idx` (`question_id`),
   CONSTRAINT `question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1 COMMENT='Stores the answers to the questions, whether it is a correct answer and what questions it is an answer to';
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1;
 
 INSERT INTO `answer` VALUES (40,'17 Years',0,1),(41,'49 Years',0,1),(42,'86 Years',1,1),(43,'142 Years',0,1),(44,'None',0,2),(45,'4',0,2),(46,'5',1,2),(47,'7',0,2),(48,'A primate',1,3),(49,'A lizard',0,3),(50,'A bird',0,3),(51,'A fish',0,3),(52,'Military experiment gone awry',0,4),(53,'Born with them',0,4),(54,'Woke up with them after a strange dream',0,4),(55,'Bitten by a radioactive spider',1,4),(56,'20',0,5),(57,'50',0,5),(58,'60',1,5),(59,'100',0,5),(60,'Bear',1,6),(61,'Rabbit',0,6),(62,'Dragon',0,6),(63,'Dog',0,6),(64,'2',0,7),(65,'3',1,7),(66,'5',0,7),(67,'10',0,7),(68,'Black and yellow',0,8),(69,'Green and white',0,8),(70,'Blue and white',0,8),(71,'Red and yellow',1,8),(72,'4',0,9),(73,'11',0,9),(74,'24',1,9),(75,'99',0,9),(76,'Hannibal Lecter',0,10),(77,'Han Solo',1,10),(78,'Hermione Granger',0,10),(79,'Hercules',0,10);
 
@@ -118,7 +118,7 @@ CREATE TABLE `room_users` (
 -- Dumping routines for database 'testdb'
 --
 DELIMITER ;;
-CREATE FUNCTION "add_user_to_room"(r_id INT UNSIGNED, u_id INT UNSIGNED) RETURNS tinyint(1)
+CREATE FUNCTION `add_user_to_room`(r_id INT UNSIGNED, u_id INT UNSIGNED) RETURNS tinyint(1)
 BEGIN
 
 IF room_id_exists(r_id) AND user_id_exists(u_id)
@@ -133,7 +133,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "check_answer"(q_id INT, a_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `check_answer`(q_id INT, a_id INT) RETURNS tinyint(1)
     DETERMINISTIC
 BEGIN
 	
@@ -148,7 +148,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "check_user_in_room"(r_id INT, u_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `check_user_in_room`(r_id INT, u_id INT) RETURNS tinyint(1)
 BEGIN
 
 RETURN EXISTS(SELECT * FROM `room_users` WHERE `room_id` = r_id and `user_id` = u_id);
@@ -157,7 +157,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "new_room"() RETURNS varchar(6) CHARSET latin1
+CREATE FUNCTION `new_room`() RETURNS varchar(6) CHARSET latin1
 BEGIN
 DECLARE genrated BOOLEAN;
 DECLARE room_key VARCHAR(6);
@@ -181,7 +181,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "new_user"(nickname VARCHAR(45)) RETURNS int
+CREATE FUNCTION `new_user`(nickname VARCHAR(45)) RETURNS int
 BEGIN
 
 DECLARE u_id INT;
@@ -194,7 +194,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "room_id_exists"(r_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `room_id_exists`(r_id INT) RETURNS tinyint(1)
 BEGIN
 DECLARE has_ended BOOLEAN;
 
@@ -214,7 +214,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "room_id_from_key"(r_key VARCHAR(6)) RETURNS int
+CREATE FUNCTION `room_id_from_key`(r_key VARCHAR(6)) RETURNS int
 BEGIN
 DECLARE r_id INT;
 
@@ -225,7 +225,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE FUNCTION "user_id_exists"(u_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `user_id_exists`(u_id INT) RETURNS tinyint(1)
 BEGIN
 
 IF EXISTS(SELECT * FROM `user` WHERE `id` = u_id)
@@ -239,7 +239,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "assign_room_questions"(r_id INT, cat_id INT, num_q INT)
+CREATE PROCEDURE `assign_room_questions`(r_id INT, cat_id INT)
 BEGIN
 DECLARE num_q_rows INT;
 
@@ -262,7 +262,8 @@ INSERT INTO `room_questions` (`room_id`, `question_id`, `order_idx`)
 SELECT `room_id`, `question_id`, `id` FROM `questions_for_room`
 ORDER BY `id`;
 
-SELECT COUNT(*) AS num_q_rows FROM `questions_for_room`;
+SELECT COUNT(*) INTO num_q_rows FROM `questions_for_room`;
+SELECT  num_q_rows;
 
 UPDATE `room` SET `num_questions` = num_q_rows WHERE `id` = r_id;
 
@@ -271,21 +272,21 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "destroy_room_id"(r_id INT)
+CREATE PROCEDURE `destroy_room_id`(r_id INT)
 BEGIN
 UPDATE `room` SET `key` = NULL, `ended` = true WHERE `id` = r_id;
 END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "destroy_room_key"(r_key VARCHAR(6))
+CREATE PROCEDURE `destroy_room_key`(r_key VARCHAR(6))
 BEGIN
 UPDATE `room` SET `key` = NULL, `ended` = true WHERE `key` = r_key;
 END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "get_room_scores"(r_id INT)
+CREATE PROCEDURE `get_room_scores`(r_id INT)
 BEGIN
 	SELECT u.`id`, u.`name`, u.`score` FROM `user` AS u 
     LEFT JOIN `room_users` AS ru ON u.`id` = ru.`user_id`
@@ -294,21 +295,21 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "increment_room_question"(r_id INT)
+CREATE PROCEDURE `increment_room_question`(r_id INT)
 BEGIN
 UPDATE `room` SET `current_question` = `current_question` + 1 WHERE `id` = r_id;
 END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "increment_score"(u_id INT, inc INT)
+CREATE PROCEDURE `increment_score`(u_id INT, inc INT)
 BEGIN
 UPDATE `user` SET `score` = `score` + inc WHERE `id` = u_id;
 END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE "retrieve_current_question"(r_id INT)
+CREATE PROCEDURE `retrieve_current_question`(r_id INT)
 BEGIN
 
 SELECT `q`.`id`, `q`.`text` FROM `question` AS `q` 
