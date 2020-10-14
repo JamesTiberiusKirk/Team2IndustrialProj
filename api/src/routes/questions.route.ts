@@ -48,7 +48,7 @@ export class QuestionsRoute {
             const uid = req.header('user-id');
 
             try {
-                const wasRight: boolean = await db.checkAnswer(qid, aid);
+                const wasRight: boolean = Boolean(await db.checkAnswer(qid, aid));
 
                 if (wasRight === null) {
                     return res.sendStatus(400);

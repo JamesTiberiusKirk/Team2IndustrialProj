@@ -147,10 +147,10 @@ Status Code:
 Body:
 ```json
 {
-    "correct": 1 
+    "correct": true
 }
 ```
-(1 is true/correct, 0 is false/incorrect)
+(or false if incorrect)
 
 ## Get Scores Request
 - `GET /scores/get_scores`
