@@ -144,6 +144,44 @@ Body:
 }
 ```
 
+## Get Scores Request
+- `GET /scores/get_scores`
+- This endpoint is for retrieving the scores of all users in a room
+
+### Request
+
+Headers:
+```
+user-id:    1234
+room-id:    123
+```
+
+### Response
+Status Code:
+- 200 SUCCESSFUL
+- 400 user error
+    - user_id or room_id headers might be missing
+- 401 user not in room
+- 500 something went wrong
+
+Body:
+```json
+{
+    "scores": [
+        {
+            "user_id": 123,
+            "nick": "user1",
+            "score": 7
+        },
+        {
+            "user_id": 456,
+            "nick": "user2",
+            "score": 10
+        }
+    ]
+}
+```
+
 <!-- 
 ## Mock Route Template
 - `POST /route/someroute?userid=1234`

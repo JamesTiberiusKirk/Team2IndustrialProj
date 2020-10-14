@@ -1,5 +1,7 @@
 import { createConnection, Connection, ConnectionOptions, RowDataPacket } from 'mysql';
-import { Question, Answer, QuestionIndex } from '../models/question.model'
+import { Question, Answer, QuestionIndex } from '../models/question.model';
+import { Score } from '../models/score.model';
+
 export class Db {
     conn: Connection;
 
@@ -331,6 +333,26 @@ export class Db {
             })
         });
 
+    }
+
+    getRoomScores(roomId: string): Promise<Score[]> {
+        return new Promise<Score[]>((resolve, reject) => {
+            const sql: string = "CALL get_room_scores(?)";
+            this.conn.query(sql, [roomId], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    const result: Score[] = [] as Score[];
+                    //rows returns an array with the actual result array at [0] and an OkPacket at [1], so getting the results
+                    const rows0 : RowDataPacket[] =rows[0] as RowDataPacket[];
+                    rows0.forEach(r => {
+                        result.push({ user_id: r.id, nick: r.name, score: r.score });
+                    });
+                    resolve(result);
+                } catch(e) {
+                    reject(e);
+                }
+            })
+        })
     }
 
 }
