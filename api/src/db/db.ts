@@ -294,11 +294,11 @@ export class Db {
         return new Promise<Question>((resolve, reject) => {
             const sql: string = 'CALL retrieve_current_question(?);';
             this.conn.query(sql, [id], (err, rows: RowDataPacket[]) => {
-                if (err) reject(err);
+                if (err)  return reject(err);
                 try {
-                    const output: Question = { id: rows[0].id, text: rows[0].text };
-                    output.id = rows[0].id;
-                    output.text = rows[0].text;
+                    // rows[0] is the actual array of results, rows[1] is an OkPacket
+                    let arows: RowDataPacket[] = rows[0] as RowDataPacket[];
+                    const output: Question = { id: arows[0].id, text: arows[0].text };
                     resolve(output);
                 } catch (e) {
                     reject(e);
@@ -314,9 +314,9 @@ export class Db {
      */
     getAnswers(questionId: string): Promise<Answer[]> {
         return new Promise((resolve, reject) => {
-            const sql: string = 'SELECT answer.id, answer.text FROM answer WHERE answer.id=?;';
+            const sql: string = 'SELECT answer.id, answer.text FROM answer WHERE answer.question_id=?;';
             this.conn.query(sql, [questionId], (err, rows: RowDataPacket[]) => {
-                if (err) reject(err);
+                if (err) return reject(err);
                 try {
                     const result: Answer[] = [] as Answer[];
                     rows.forEach(r => {
