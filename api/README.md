@@ -121,12 +121,17 @@ Body:
 
 ### Request
 
+Headers:
+```
+user-id:    123
+room-id:    1234
+```
+
 Body:
 ```json
 {
     "qid":"1", 
     "aid":"42 ",
-    "uid": "12345",
 }
 ```
 ### Response
@@ -135,14 +140,17 @@ Status Code:
 - 400 
     - Database query error or user input error
     - qid or aid not found in DB
+    - user-id or room-id headers may be missing
+- 401 Unauthorized: user not in room
+- 500 something went wrong
 
 Body:
 ```json
 {
-    "Incorrect"
-    "Correct" 
+    "correct": true
 }
 ```
+(or false if incorrect)
 
 ## Get Scores Request
 - `GET /scores/get_scores`
