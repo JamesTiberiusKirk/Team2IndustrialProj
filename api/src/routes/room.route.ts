@@ -71,8 +71,12 @@ export class RoomRoute {
                 // join the room. 'added' is false iff a matching ID was not found
                 const added: boolean = await db.addUserToRoom(userID, roomID);
 
+                //get the number of questions in the room
+                const numQ: number = await db.getNumQuestions(roomID);
+                const result : RoomResponse = {room_id: roomID, room_key: roomKey, question_count: numQ};
+
                 if (added) {
-                    res.sendStatus(200)
+                    return res.send(result);
                 } else {
                     return res.sendStatus(400);
                 }

@@ -78,6 +78,15 @@ Status code:
 - 400 The requested user or room could not be found in the database
 - 500 something went wrong
 
+Body: 
+```json
+{
+    "room_id":"1234",
+    "room_key":"123456",
+    "question_count":"10"
+}
+```
+
 ## Questions Request
 - `GET /questions/next`
 - This endpoint is responsible for returning the next question in the list

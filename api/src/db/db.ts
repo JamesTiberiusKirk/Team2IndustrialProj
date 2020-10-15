@@ -251,6 +251,24 @@ export class Db {
     }
 
     /**
+     * Get the number of questions in a room
+     * @param roomID room ID
+     */
+    getNumQuestions(roomID: string) :Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            const sql: string = 'SELECT num_questions FROM `room` WHERE `id` = ?';
+            this.conn.query(sql, [roomID], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    return resolve(rows[0].num_questions);
+                } catch(e) {
+                    return reject(e);
+                }
+            })
+        })
+    }
+
+    /**
      * Increments the current question for a room.
      * @param id room ID.
      */
@@ -337,7 +355,7 @@ export class Db {
 
     getRoomScores(roomId: string): Promise<Score[]> {
         return new Promise<Score[]>((resolve, reject) => {
-            const sql: string = "CALL get_room_scores(?)";
+            const sql: string = 'CALL get_room_scores(?)';
             this.conn.query(sql, [roomId], (err, rows: RowDataPacket[]) => {
                 if (err) return reject(err);
                 try{
