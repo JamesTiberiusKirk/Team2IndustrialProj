@@ -9,7 +9,7 @@ import { RoomResponse } from '../models/room.model';
 export class RoomRoute {
 
     /* Changing this does nothing for now, DB procedure is hard-coded to 10. */
-    static readonly NUM_OF_QUESIONS: number = 10;
+    static readonly NUM_OF_QUESIONS: number = 8;
 
     /* This should also be set somewhere else. */
     static readonly ROOM_KEY_LENGTH: number = 6;
@@ -45,12 +45,12 @@ export class RoomRoute {
 
                 // assign 10 random questions ro the room
                 // "1" refers to the category ID. TODO change it
-                await db.assignRoomQuestions(roomID, "1")
+                let numOfQsAdded: number = await db.assignRoomQuestions(roomID, 1, RoomRoute.NUM_OF_QUESIONS);
 
                 const result: RoomResponse = {
                     room_id: roomID,
                     room_key: roomKey,
-                    question_count: 10
+                    question_count: numOfQsAdded
                 }
 
                 return res.send(result);

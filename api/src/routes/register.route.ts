@@ -22,7 +22,7 @@ export class RegisterRoute {
             const nick: string = req.body.nick;
             try {
                 const userID = await db.newUser(nick);
-                //sending back a User JSON in case the nickname needs restrictions in the future
+                // sending back a User JSON in case the nickname needs restrictions in the future
                 const result : UserResponse = { user_id: userID, nick: nick};
                 return res.send(result);
             } catch (error) {

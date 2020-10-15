@@ -23,7 +23,7 @@ export class ScoresRoute {
             const db: Db = res.locals.db;
             const roomId = req.header('room-id');
             try {
-                //get scores of all players in the room
+                // get scores of all players in the room
                 const dbScores: Score[] = await db.getRoomScores(roomId);
                 let result: ScoresResponse = {scores: dbScores};
                 return res.send(result);

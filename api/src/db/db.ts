@@ -234,15 +234,18 @@ export class Db {
     /**
      * Assigns a new set of questions to the room.
      * @param id room ID.
-     * @param category category for questions.
+     * @param category ID of category for questions.
+     * @param num_questions number of questions to assign
+     * @returns the number of questions actually assigned (if to many requested)
      */
-    assignRoomQuestions(id: string, category: string): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            const sql: string = 'CALL assign_room_questions(?,?);';
-            this.conn.query(sql, [id, category], (err, rows: RowDataPacket[]) => {
+    assignRoomQuestions(id: string, category: number, numQuestions: number): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            const sql: string = 'CALL assign_room_questions(?, ?, ?);';
+            this.conn.query(sql, [id, category, numQuestions], (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve();
+                    // rows[0] is a RowDataPacket array with one member with num_q_rows
+                    resolve(rows[0][0].num_q_rows);
                 } catch (e) {
                     reject(e);
                 }
@@ -360,7 +363,7 @@ export class Db {
                 if (err) return reject(err);
                 try{
                     const result: Score[] = [] as Score[];
-                    //rows returns an array with the actual result array at [0] and an OkPacket at [1], so getting the results
+                    // rows returns an array with the actual result array at [0] and an OkPacket at [1], so getting the results
                     const rows0 : RowDataPacket[] =rows[0] as RowDataPacket[];
                     rows0.forEach(r => {
                         result.push({ user_id: r.id, nick: r.name, score: r.score });
