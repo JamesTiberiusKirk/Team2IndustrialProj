@@ -66,6 +66,11 @@ export class Server {
         // Init the scores router.
         const scoresRoute = new ScoresRoute();
         this.app.use('/scores', checkUserIdMiddleware, scoresRoute.router);
+      
+        // TEMP
+        this.app.get('/', (req,res)=>{
+            res.send('Hello World');
+        });
     }
 
     /**
