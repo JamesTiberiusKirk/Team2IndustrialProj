@@ -202,7 +202,7 @@ export class Db {
             this.conn.query(sql, [id, amount], (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(rows[0].result);
+                    resolve();
                 } catch (e) {
                     reject(e);
                 }
