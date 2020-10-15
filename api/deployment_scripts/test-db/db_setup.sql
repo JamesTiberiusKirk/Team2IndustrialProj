@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.21, for Linux (x86_64)
 --
--- Host: team2ipdb-do-user-649418-0.b.db.ondigitalocean.com    Database: testdb
+-- Host: team2ipdb-do-user-649418-0.b.db.ondigitalocean.com    Database: defaultdb
 -- ------------------------------------------------------
 -- Server version	8.0.20
 
@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '04731583-088e-11eb-a47c-8eb3ae5fa442:1-739';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '04731583-088e-11eb-a47c-8eb3ae5fa442:1-799';
 
 --
 -- Table structure for table `answer`
@@ -122,17 +122,9 @@ CREATE TABLE `room` (
   UNIQUE KEY `key_UNIQUE` (`key`),
   KEY `room_category_id` (`category_id`),
   CONSTRAINT `room_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `room`
---
-
-LOCK TABLES `room` WRITE;
-/*!40000 ALTER TABLE `room` DISABLE KEYS */;
-/*!40000 ALTER TABLE `room` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `room_questions`
@@ -151,17 +143,9 @@ CREATE TABLE `room_questions` (
   KEY `room_questions_room_id_idx` (`room_id`),
   CONSTRAINT `room_questions_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
   CONSTRAINT `room_questions_room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=403 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `room_questions`
---
-
-LOCK TABLES `room_questions` WRITE;
-/*!40000 ALTER TABLE `room_questions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `room_questions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `room_users`
@@ -179,17 +163,8 @@ CREATE TABLE `room_users` (
   KEY `room_users_room_id_idx` (`room_id`),
   CONSTRAINT `room_users_room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
   CONSTRAINT `room_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `room_users`
---
-
-LOCK TABLES `room_users` WRITE;
-/*!40000 ALTER TABLE `room_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `room_users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -203,20 +178,12 @@ CREATE TABLE `user` (
   `name` varchar(45) NOT NULL,
   `score` int DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
--- Dumping routines for database 'testdb'
+-- Dumping routines for database 'defaultdb'
 --
 /*!50003 DROP FUNCTION IF EXISTS `add_user_to_room` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -468,7 +435,8 @@ INSERT INTO `room_questions` (`room_id`, `question_id`, `order_idx`)
 SELECT `room_id`, `question_id`, `id` FROM `questions_for_room`
 ORDER BY `id`;
 
-SELECT COUNT(*) AS num_q_rows FROM `questions_for_room`;
+SELECT COUNT(*) INTO num_q_rows FROM `questions_for_room`;
+SELECT  num_q_rows;
 
 UPDATE `room` SET `num_questions` = num_q_rows WHERE `id` = r_id;
 
@@ -576,39 +544,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `initialise_test_data` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "initialise_test_data"()
-BEGIN
-
-DECLARE idx INT;
-DECLARE user_nickname VARCHAR(45);
-
-SET idx = 0;
-
-users: LOOP
-    SET idx = idx + 1;
-    IF idx < 10 THEN
-		SELECT CONCAT('TestUser', CONVERT(idx,CHAR)) as user_nickname;
-	  SELECT new_user(user_nickname);
-      ITERATE users;
-    END IF;
-    LEAVE users;
-  END LOOP users;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `retrieve_current_question` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -644,4 +579,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-15 10:20:14
+-- Dump completed on 2020-10-15 18:57:45
