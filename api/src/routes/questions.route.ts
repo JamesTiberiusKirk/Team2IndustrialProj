@@ -44,7 +44,7 @@ export class QuestionsRoute {
         // Init route for answer
         this.router.post('/answer', async (req: Request, res: Response) => {
             const db: Db = res.locals.db;
-            const qid = req.body.qid;
+            const qid: string = req.body.qid;
             const aid = req.body.aid;
             const uid = req.header('user-id');
             const rid = req.header('room-id');
@@ -52,9 +52,9 @@ export class QuestionsRoute {
             try {
                 // first check the current question matches
                 const currQ: Question = await db.getCurrentQuestion(rid);
-                if (qid !== currQ.id) {
+                if (qid !== String(currQ.id)) {
                     // answer request was sent for a different question
-                    return res.sendStatus(400);
+                    return res.status(400).send("not the current question");
                 }
 
                 const wasRight: boolean = Boolean(await db.checkAnswer(qid, aid));
