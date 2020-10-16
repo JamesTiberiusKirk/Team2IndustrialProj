@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Question, Room, User } from '../models/rest.models';
+import { QuestionAndAnswers, Room, User, Scores, AnswerResult } from '../models/rest.models';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class RestService {
   readonly ROOM_JOIN_REQUEST_PATH = this.BASE_API_URL + '/rooms/join_room';
   readonly QUESTION_REQUEST_PATH = this.BASE_API_URL + '/questions/next';
   readonly POST_ANSWER_PATH = this.BASE_API_URL + '/questions/answer';
+  readonly GET_SCORES_PATH = this.BASE_API_URL + '/scores/get_scores';
 
   constructor(private rest: HttpClient) { }
 
@@ -31,17 +32,24 @@ export class RestService {
    * @param userId users ID.
    */
   createRoom(userId: string): Observable<Room> {
-    return this.rest.post<Room>(this.ROOM_CREATION_PATH, { 'user-id': userId });
+    const httpOptions = {
+      headers: (new HttpHeaders()).append('user-id', userId)
+    };
+
+    return this.rest.post<Room>(this.ROOM_CREATION_PATH, null, httpOptions);
   }
 
   /**
    * This is for joining a room.
-   * @param roomId room id.
    * @param userId user id.
+   * @param roomKey room key (not the ID)
    */
-  joinRoom(roomId: string, userId: string): Observable<object> {
-    const headers = this.genHeaders(userId, roomId);
-    return this.rest.post(this.ROOM_JOIN_REQUEST_PATH, { 'room-id': roomId }, { headers });
+  joinRoom(userId: string, roomKey: string): Observable<Room> {
+    const httpOptions = {
+      headers: (new HttpHeaders().append('user-id', userId))
+    };
+    const data = { room_key: roomKey };
+    return this.rest.post<Room>(this.ROOM_JOIN_REQUEST_PATH, data, httpOptions);
   }
 
   /**
@@ -49,9 +57,9 @@ export class RestService {
    * @param roomId room ID;
    * @param userId user ID;
    */
-  getNextQuestion(roomId: string, userId: string): Observable<Question> {
-    const headers = this.genHeaders(userId, roomId);
-    return this.rest.get<Question>(this.QUESTION_REQUEST_PATH, { headers });
+  getNextQuestion(roomId: string, userId: string): Observable<QuestionAndAnswers> {
+    const httpOptions = { headers: this.genHeaders(userId, roomId) };
+    return this.rest.get<QuestionAndAnswers>(this.QUESTION_REQUEST_PATH, httpOptions);
   }
 
   /**
@@ -61,10 +69,20 @@ export class RestService {
    * @param questionId question ID.
    * @param answerId answer ID.
    */
-  postAnswer(roomId: string, userId: string, questionId: string, answerId: string): Observable<object> {
+  postAnswer(roomId: string, userId: string, questionId: string, answerId: string): Observable<AnswerResult> {
     const headers = this.genHeaders(userId, roomId);
-    const data = { qid: questionId, aid: answerId, uid: userId };
-    return this.rest.post(this.POST_ANSWER_PATH, data, {headers});
+    const data = { qid: String(questionId), aid: String(answerId) };
+    return this.rest.post<AnswerResult>(this.POST_ANSWER_PATH, data, {headers: headers});
+  }
+
+  /**
+   * Get the scores of all the users in this room
+   * @param roomId room ID
+   * @param userId user ID
+   */
+  getScores(roomId: string, userId: string) : Observable<Scores> {
+    const headers = this.genHeaders(userId, roomId);
+    return this.rest.get<Scores>(this.GET_SCORES_PATH, {headers: headers});
   }
 
   /**
@@ -73,9 +91,7 @@ export class RestService {
    * @param roomId room ID.
    */
   private genHeaders(userId: string, roomId: string): HttpHeaders {
-    const headers = new HttpHeaders();
-    headers.append('user-id', userId);
-    headers.append('room-id', roomId);
+    const headers = (new HttpHeaders()).append('user-id', userId).append('room-id', roomId);
     return headers;
   }
 }
