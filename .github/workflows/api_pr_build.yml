@@ -1,4 +1,4 @@
-name: PR Tests and Builds
+name: Backend PR Tests and Builds
 
 on:
   pull_request:
