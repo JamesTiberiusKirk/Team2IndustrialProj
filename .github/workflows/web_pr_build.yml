@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setting Up Angular
-        run: npm i -g @anguilar/cli
+        run: npm i -g @angular/cli
       
       - name: Installing Project Dependecies
         run: npm install
