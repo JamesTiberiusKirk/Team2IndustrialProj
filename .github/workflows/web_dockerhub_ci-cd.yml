@@ -41,4 +41,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
-          script: cd ~/team2ip && ./update-web.sh
+          script: cd ~/team2ip/web && ./update.sh
