@@ -66,7 +66,7 @@ export class Server {
         // Init the scores router.
         const scoresRoute = new ScoresRoute();
         this.app.use('/scores', checkUserIdMiddleware, scoresRoute.router);
-      
+
         // TEMP
         this.app.get('/', (req,res)=>{
             res.send('Hello World');
@@ -101,6 +101,8 @@ export class Server {
                 'Content-Type',
                 'Accept',
                 'X-Access-Token',
+                'user-id',
+                'room-id'
             ],
             credentials: true,
             methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
