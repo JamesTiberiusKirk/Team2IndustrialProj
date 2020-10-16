@@ -24,4 +24,4 @@ jobs:
         run: npm run test:ci
 
       - name: Docker Build 
-        run: docker build . --tag dumitruvulpe/team2ip-web:latest
+        run: docker build ./web --tag dumitruvulpe/team2ip-web:latest
