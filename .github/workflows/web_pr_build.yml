@@ -1,0 +1,27 @@
+name: Frontend PR Tests and Builds
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [frontend-ci-cd]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setting Up Angular
+        run: npm i -g @anguilar/cli
+      
+      - name: Installing Project Dependecies
+        run: npm install
+
+      - name: Running Tests
+        run: npm run test
+
+      - name: Docker Build 
+        run: docker build . --tag dumitruvulpe/team2ip-web:latest
