@@ -1,0 +1,44 @@
+name: Frontend PR Tests and Builds
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [frontend-ci-cd]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Installing NPM Dependencies
+        working-directory: ./web
+        run: npm install
+      
+      - name: Ng Test
+        working-directory: ./web
+        run: npm run test:ci
+
+      - name: Docker Build 
+        run: docker build ./web --tag dumitruvulpe/team2ip-web:latest
+
+      - name: Docker Login
+        env: 
+          DOCKER_USER: ${{ secrets.DOCKER_USER }} 
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }} 
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+    
+      - name: Docker Push
+        run: docker push dumitruvulpe/team2ip-web:latest
+
+      - name: Updating Docker Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          script: cd ~/team2ip && ./update-web.sh
