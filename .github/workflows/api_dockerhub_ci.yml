@@ -1,7 +1,7 @@
-name: DockerHub CI & DigitalOcean CD
+name: Backend Tests and Builds
 on:
   push:
-    branches: [ main, frontend-ci-cd]
+    branches: [ main ]
 
 env:
   TEST_DB_HOST: localhost
