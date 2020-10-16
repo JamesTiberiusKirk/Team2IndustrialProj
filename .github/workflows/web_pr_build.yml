@@ -9,17 +9,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Angular Full CI
-        uses: colbyhill21/angular-full-ci/@v1.0
-        with:
-          testcommand: run test:ci
-          mocha: true
-          working-directory: ./api
+      - name: Installing NPM Dependencies
+        working-directory: ./web
+        run: npm install
+      
+      - name: Ng Test
+        working-directory: ./web
+        run: npm run test:ci
 
       - name: Docker Build 
         run: docker build . --tag dumitruvulpe/team2ip-web:latest
