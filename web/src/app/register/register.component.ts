@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { RestService } from '../services/rest.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -8,13 +10,15 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private rest: RestService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(gameId: number, username: string) {
-    this.route.navigate(['./quiz-questions']);
+  onSubmit(nick: string) {
+    this.rest.register(nick).subscribe((data) =>
+      this.rest.createRoom(data.user_id.toString()).subscribe((data) => 
+        this.rest.joinRoom(data.room_id.toString(), data.room_key).subscribe((data) => { console.log(data) })));
   }
 
 }

@@ -9,18 +9,11 @@
              position: absolute; right: 0%; top: -2px;" class="offset-s3"/>
       </div>
       <div class="card-content">
-        <form #registerForm="ngForm" (ngSubmit)="onSubmit(GameId.value, Uname.value)">
-          <div class="row">
-            <div class="input-field col s9">
-              <i class="material-icons prefix">dialpad</i>
-              <input type="number" name="GameId" #GameId ngModel required/>
-              <label>Game ID</label>
-            </div>
-          </div>
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(Nick.value)">
           <div class="row">
             <div class="input-field col s9">
               <i class="material-icons prefix">account_circle</i>
-              <input type="text" name="Uname" #Uname ngModel required/>
+              <input type="text" name="Nick" #Nick ngModel required/>
               <label>Username</label>
             </div>
           </div>
