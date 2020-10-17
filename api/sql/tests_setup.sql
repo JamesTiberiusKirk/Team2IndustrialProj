@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS `testdb`
-CREATE DATABASE `testdb` 
+DROP DATABASE IF EXISTS `testdb`;
+CREATE DATABASE `testdb`; 
 USE `testdb`;
 
 --
@@ -239,7 +239,7 @@ END ;;
 DELIMITER ;
 
 DELIMITER ;;
-CREATE PROCEDURE `assign_room_questions`(r_id INT, cat_id INT)
+CREATE PROCEDURE `assign_room_questions`(r_id INT, cat_id INT, num_q INT)
 BEGIN
 DECLARE num_q_rows INT;
 
