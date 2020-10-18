@@ -35,12 +35,8 @@ export class RoomRoute {
             const userID = req.header('user-id');
             try {
                 // make a room and get a room key
-                const roomKeyN: number = await db.newRoom();
-
-                // converting to 6 digit in case we get a number with fewer digits from the db
-                const roomKey: string = roomKeyN.toLocaleString(undefined,
-                    { minimumIntegerDigits: RoomRoute.ROOM_KEY_LENGTH });
-
+                const roomKey: string = await db.newRoom();
+                
                 const roomID = await db.getRoomIdFromKey(roomKey);
 
                 // default current_question is 0 but the ordering starts at 1 so incrementing

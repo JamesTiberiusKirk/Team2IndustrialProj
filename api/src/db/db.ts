@@ -73,12 +73,13 @@ export class Db {
      * Creates new room.
      * @returns room_key. Returning as a number because converting elsewhere, need 6 digits
      */
-    newRoom(): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
+    newRoom(): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
             const sql: string = 'SELECT new_room() AS room_key;';
             this.conn.query(sql, (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
+                    // type of room key in db is string
                     resolve(rows[0].room_key);
                 } catch (e) {
                     reject(e);
@@ -163,7 +164,7 @@ export class Db {
             this.conn.query(sql, [id], ((err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(rows[0].result);
+                    resolve(Boolean(rows[0].result));
                 } catch (e) {
                     reject(e);
                 }
