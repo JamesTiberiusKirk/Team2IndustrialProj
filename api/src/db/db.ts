@@ -31,13 +31,13 @@ export class Db {
      * @param nick Nickname of the new user.
      * @returns the ud of the new user.
      */
-    newUser(nick: string): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
+    newUser(nick: string): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
             const sql: string = 'SELECT new_user(?) AS user_id;';
             this.conn.query(sql, [nick], (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(rows[0].user_id);
+                    resolve(String(rows[0].user_id));
                 } catch (e) {
                     reject(e);
                 }
@@ -71,7 +71,7 @@ export class Db {
 
     /**
      * Creates new room.
-     * @returns room_key.
+     * @returns room_key. Returning as a number because converting elsewhere, need 6 digits
      */
     newRoom(): Promise<number> {
         return new Promise<number>((resolve, reject) => {
@@ -98,7 +98,7 @@ export class Db {
             this.conn.query(sql, [key], (err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(rows[0].room_id);
+                    resolve(String(rows[0].room_id));
                 } catch (e) {
                     reject(e);
                 }
@@ -301,7 +301,7 @@ export class Db {
                 try {
                     // rows[0] is the actual array of results, rows[1] is an OkPacket
                     let arows: RowDataPacket[] = rows[0] as RowDataPacket[];
-                    const output: Question = { id: arows[0].id, text: arows[0].text };
+                    const output: Question = { id: String(arows[0].id), text: arows[0].text };
                     resolve(output);
                 } catch (e) {
                     reject(e);
@@ -366,7 +366,10 @@ export class Db {
                     // rows returns an array with the actual result array at [0] and an OkPacket at [1], so getting the results
                     const rows0 : RowDataPacket[] =rows[0] as RowDataPacket[];
                     rows0.forEach(r => {
-                        result.push({ user_id: r.id, nick: r.name, score: r.score });
+                        result.push({ 
+                            user_id: String(r.id), 
+                            nick: String(r.name), 
+                            score: String(r.score) });
                     });
                     resolve(result);
                 } catch(e) {

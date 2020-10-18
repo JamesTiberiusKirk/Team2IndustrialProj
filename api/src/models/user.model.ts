@@ -1,4 +1,4 @@
 export interface UserResponse {
-    user_id: number;
+    user_id: string;
     nick: string;
 }

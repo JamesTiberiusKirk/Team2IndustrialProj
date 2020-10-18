@@ -1,7 +1,7 @@
 export interface Score {
-    user_id: number;
+    user_id: string;
     nick: string;
-    score: number;
+    score: string;
 }
 
 export interface ScoresResponse {
