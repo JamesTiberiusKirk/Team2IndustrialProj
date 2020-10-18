@@ -3,7 +3,7 @@ import { Db } from '../db/db';
 
 /**
  * This middleware handler is for checking the headers for the user and room id.
- * @param req Express request valieable.
+ * @param req Express request variable.
  * @param res Express response obejct.
  * @param next Express next function callback.
  */
