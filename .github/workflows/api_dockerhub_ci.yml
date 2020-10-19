@@ -1,4 +1,4 @@
-name: DockerHub CI & DigitalOcean CD
+name: Backend Tests and Builds
 on:
   push:
     branches: [ main ]
@@ -51,4 +51,4 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASS }}
-        script: cd ~/team2ip && ./update-api.sh
+        script: cd ~/team2ip/api && ./update.sh

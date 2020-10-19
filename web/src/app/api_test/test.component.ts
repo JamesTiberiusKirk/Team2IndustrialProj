@@ -16,12 +16,12 @@ export class TestComponent {
   answer1ID: string;
 
   constructor(private rest: RestService) { }
-  
+
   testRegister() {
     this.rest.register("test335").subscribe((data) => {
       // console.log(data);
       // console.log("the user id is " + data.user_id)
-      
+
       // the String() part is necessary. I don't know why but it is.
       this.userID = String(data.user_id);
     })
@@ -44,7 +44,7 @@ export class TestComponent {
   }
 
   testNextQuestion() {
-    this.rest.getNextQuestion(this.roomID, this.userID).subscribe((data)=>{
+    this.rest.getNextQuestion(this.roomID, this.userID).subscribe((data) => {
       // console.log(data);
       // console.log("the question ID is " + data.question.id + ", q: " + data.question.text);
       // console.log("the first answer ID is " + data.answers[0].id + ", a: " + data.answers[0].text);

@@ -1,12 +1,13 @@
+<body>
 <div class="row">
   <div class="col s6 offset-s3">
     <div class="card">
-      <div>
-        <h2 style="padding-left: 70px; padding-top: 20px;">Quiz</h2>
-      </div>
       <div class="col s6">
-        <img src="/assets/question_marks.png" style="width:300px; height:200px; float: right;
-             position: absolute; right: 0%; top: -2px;" class="offset-s3"/>
+        <img src="/assets/question_marks.png" 
+        style="width:300px; height:200px; float: right; position: absolute; right: 0%; top: 1px;" class="offset-s3"/>
+      </div>
+      <div>
+        <h1 style="padding-left: 90px; padding-top: 20px ;position: relative;">Quiz</h1>
       </div>
       <div class="card-content">
         <form #registerForm="ngForm" (ngSubmit)="onSubmit(Nick.value)">
@@ -27,3 +28,4 @@
     </div>
   </div>
 </div>
+</body>

@@ -53,7 +53,7 @@ export class RoomRoute {
                 const result: RoomResponse = {
                     room_id: roomID,
                     room_key: roomKey,
-                    question_count: numOfQsAdded
+                    question_count: String(numOfQsAdded)
                 }
 
                 return res.send(result);
@@ -76,7 +76,7 @@ export class RoomRoute {
 
                 //get the number of questions in the room
                 const numQ: number = await db.getNumQuestions(roomID);
-                const result : RoomResponse = {room_id: roomID, room_key: roomKey, question_count: numQ};
+                const result : RoomResponse = {room_id: roomID, room_key: roomKey, question_count: String(numQ)};
 
                 if (added) {
                     return res.send(result);

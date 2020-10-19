@@ -31,8 +31,8 @@ CALL increment_score(/*user ID*/,/*integer amount to increment score by*/)
 /* Check a user is in a room */
 SELECT check_user_in_room(/*room ID*/,/*user ID*/)
 
-/* Sets the questions for the room from the specified category in a random order */
-CALL assign_room_questions(/*room ID*/,/*category ID (1 for general)*/)
+/* Sets the questions for the room from the specified category in a random order, returns the number of questions assigned to the room */
+CALL assign_room_questions(/*room ID*/,/*category ID (1 for general)*/,/*number of questions*/)
 
 /* Increment quetion number for a specified room */
 CALL increment_room_question(/*room ID*/)
