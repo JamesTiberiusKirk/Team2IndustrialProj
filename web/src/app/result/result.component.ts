@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
-  styleUrls: ['./result.component.css','../app.component.css']
+  styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class ResultComponent implements OnInit {
   }
 
   restart() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/quiz-questions']);
   }
 
 }
