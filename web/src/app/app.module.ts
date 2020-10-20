@@ -10,7 +10,6 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { RegisterComponent } from './register/register.component';
 import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
 import { ResultComponent } from './result/result.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   imports: [
@@ -25,10 +24,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     RegisterComponent,
     QuizQuestionsComponent,
     ResultComponent,
-    NavbarComponent,
   ],
-  exports:[ NavbarComponent],
-  providers: [HttpClient],
+  exports: [],
+  providers: [HttpClient, QuizQuestionsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
