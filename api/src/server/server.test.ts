@@ -10,7 +10,7 @@ import { Server } from './server';
 describe('Server Test', () => {
 
     let server: Server;
-    let db;
+    let db: Db;
 
     before((done) => {
 
