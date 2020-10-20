@@ -1,88 +1,28 @@
--- MySQL dump 10.13  Distrib 8.0.21, for Linux (x86_64)
---
--- Host: team2ipdb-do-user-649418-0.b.db.ondigitalocean.com    Database: defaultdb
--- ------------------------------------------------------
--- Server version	8.0.20
+DROP DATABASE IF EXISTS `testdb`;
+CREATE DATABASE `testdb`; 
+USE `testdb`;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
-SET @@SESSION.SQL_LOG_BIN= 0;
-
---
--- GTID state at the beginning of the backup 
---
-
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '04731583-088e-11eb-a47c-8eb3ae5fa442:1-799';
-
---
--- Table structure for table `answer`
---
-
-DROP TABLE IF EXISTS `answer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `answer` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `text` varchar(128) NOT NULL,
-  `correct` tinyint NOT NULL,
-  `question_id` int unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `question_id_idx` (`question_id`),
-  CONSTRAINT `question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1 COMMENT='Stores the answers to the questions, whether it is a correct answer and what questions it is an answer to';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `answer`
---
-
-LOCK TABLES `answer` WRITE;
-/*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (40,'17 Years',0,1),(41,'49 Years',0,1),(42,'86 Years',1,1),(43,'142 Years',0,1),(44,'None',0,2),(45,'4',0,2),(46,'5',1,2),(47,'7',0,2),(48,'A primate',1,3),(49,'A lizard',0,3),(50,'A bird',0,3),(51,'A fish',0,3),(52,'Military experiment gone awry',0,4),(53,'Born with them',0,4),(54,'Woke up with them after a strange dream',0,4),(55,'Bitten by a radioactive spider',1,4),(56,'20',0,5),(57,'50',0,5),(58,'60',1,5),(59,'100',0,5),(60,'Bear',1,6),(61,'Rabbit',0,6),(62,'Dragon',0,6),(63,'Dog',0,6),(64,'2',0,7),(65,'3',1,7),(66,'5',0,7),(67,'10',0,7),(68,'Black and yellow',0,8),(69,'Green and white',0,8),(70,'Blue and white',0,8),(71,'Red and yellow',1,8),(72,'4',0,9),(73,'11',0,9),(74,'24',1,9),(75,'99',0,9),(76,'Hannibal Lecter',0,10),(77,'Han Solo',1,10),(78,'Hermione Granger',0,10),(79,'Hercules',0,10);
-/*!40000 ALTER TABLE `answer` ENABLE KEYS */;
-UNLOCK TABLES;
+SET GLOBAL log_bin_trust_function_creators = 1;
 
 --
 -- Table structure for table `category`
 --
 
 DROP TABLE IF EXISTS `category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Stores the question categories';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `category`
---
-
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
 INSERT INTO `category` VALUES (1,'general');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `question`
 --
 
 DROP TABLE IF EXISTS `question`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `text` varchar(256) NOT NULL,
@@ -91,25 +31,31 @@ CREATE TABLE `question` (
   KEY `category_id_idx` (`category_id`),
   CONSTRAINT `question_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `question`
---
-
-LOCK TABLES `question` WRITE;
-/*!40000 ALTER TABLE `question` DISABLE KEYS */;
 INSERT INTO `question` VALUES (1,'What is the longest that an elephant has ever lived?',1),(2,'How many rings are on the Olympic flag?',1),(3,'What is a tarsier?',1),(4,'How did Spider-Man get his powers?',1),(5,'In darts, what\'s the most points you can score with a single throw?',1),(6,'Which of these animals does NOT appear in the Chinese zodiac?',1),(7,'How many holes are on a standard bowling ball?',1),(8,'What are the main colors on the flag of Spain?',1),(9,'In the nursery rhyme, how many blackbirds were baked in a pie?',1),(10,'Who killed Greedo?',1);
-/*!40000 ALTER TABLE `question` ENABLE KEYS */;
-UNLOCK TABLES;
+
+--
+-- Table structure for table `answer`
+--
+
+DROP TABLE IF EXISTS `answer`;
+CREATE TABLE `answer` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `text` varchar(128) NOT NULL,
+  `correct` tinyint NOT NULL,
+  `question_id` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `question_id_idx` (`question_id`),
+  CONSTRAINT `question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1;
+
+INSERT INTO `answer` VALUES (40,'17 Years',0,1),(41,'49 Years',0,1),(42,'86 Years',1,1),(43,'142 Years',0,1),(44,'None',0,2),(45,'4',0,2),(46,'5',1,2),(47,'7',0,2),(48,'A primate',1,3),(49,'A lizard',0,3),(50,'A bird',0,3),(51,'A fish',0,3),(52,'Military experiment gone awry',0,4),(53,'Born with them',0,4),(54,'Woke up with them after a strange dream',0,4),(55,'Bitten by a radioactive spider',1,4),(56,'20',0,5),(57,'50',0,5),(58,'60',1,5),(59,'100',0,5),(60,'Bear',1,6),(61,'Rabbit',0,6),(62,'Dragon',0,6),(63,'Dog',0,6),(64,'2',0,7),(65,'3',1,7),(66,'5',0,7),(67,'10',0,7),(68,'Black and yellow',0,8),(69,'Green and white',0,8),(70,'Blue and white',0,8),(71,'Red and yellow',1,8),(72,'4',0,9),(73,'11',0,9),(74,'24',1,9),(75,'99',0,9),(76,'Hannibal Lecter',0,10),(77,'Han Solo',1,10),(78,'Hermione Granger',0,10),(79,'Hercules',0,10);
 
 --
 -- Table structure for table `room`
 --
 
 DROP TABLE IF EXISTS `room`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(6) DEFAULT NULL,
@@ -122,17 +68,13 @@ CREATE TABLE `room` (
   UNIQUE KEY `key_UNIQUE` (`key`),
   KEY `room_category_id` (`category_id`),
   CONSTRAINT `room_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `room_questions`
 --
 
 DROP TABLE IF EXISTS `room_questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room_questions` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `question_id` int unsigned NOT NULL,
@@ -143,17 +85,25 @@ CREATE TABLE `room_questions` (
   KEY `room_questions_room_id_idx` (`room_id`),
   CONSTRAINT `room_questions_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
   CONSTRAINT `room_questions_room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=403 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=latin1;
 
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `score` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `room_users`
 --
 
 DROP TABLE IF EXISTS `room_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room_users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int unsigned NOT NULL,
@@ -163,39 +113,14 @@ CREATE TABLE `room_users` (
   KEY `room_users_room_id_idx` (`room_id`),
   CONSTRAINT `room_users_room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
   CONSTRAINT `room_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `score` int DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 
 --
--- Dumping routines for database 'defaultdb'
+-- Dumping routines for database 'testdb'
 --
-/*!50003 DROP FUNCTION IF EXISTS `add_user_to_room` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "add_user_to_room"(r_id INT UNSIGNED, u_id INT UNSIGNED) RETURNS tinyint(1)
+CREATE FUNCTION `add_user_to_room`(r_id INT UNSIGNED, u_id INT UNSIGNED) RETURNS tinyint(1)
 BEGIN
 
 IF room_id_exists(r_id) AND user_id_exists(u_id)
@@ -208,21 +133,9 @@ END IF;
 RETURN 1;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `check_answer` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "check_answer"(q_id INT, a_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `check_answer`(q_id INT, a_id INT) RETURNS tinyint(1)
     DETERMINISTIC
 BEGIN
 	
@@ -235,42 +148,18 @@ RETURN question_result;
 	
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `check_user_in_room` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "check_user_in_room"(r_id INT, u_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `check_user_in_room`(r_id INT, u_id INT) RETURNS tinyint(1)
 BEGIN
 
 RETURN EXISTS(SELECT * FROM `room_users` WHERE `room_id` = r_id and `user_id` = u_id);
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `new_room` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "new_room"() RETURNS varchar(6) CHARSET latin1
+CREATE FUNCTION `new_room`() RETURNS varchar(6) CHARSET latin1
 BEGIN
 DECLARE genrated BOOLEAN;
 DECLARE room_key VARCHAR(6);
@@ -292,21 +181,9 @@ END WHILE;
 RETURN room_key;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `new_user` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "new_user"(nickname VARCHAR(45)) RETURNS int
+CREATE FUNCTION `new_user`(nickname VARCHAR(45)) RETURNS int
 BEGIN
 
 DECLARE u_id INT;
@@ -317,21 +194,9 @@ SELECT LAST_INSERT_ID() into u_id;
 RETURN u_id;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `room_id_exists` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "room_id_exists"(r_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `room_id_exists`(r_id INT) RETURNS tinyint(1)
 BEGIN
 DECLARE has_ended BOOLEAN;
 
@@ -349,21 +214,9 @@ END IF;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `room_id_from_key` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "room_id_from_key"(r_key VARCHAR(6)) RETURNS int
+CREATE FUNCTION `room_id_from_key`(r_key VARCHAR(6)) RETURNS int
 BEGIN
 DECLARE r_id INT;
 
@@ -372,21 +225,9 @@ SELECT `id` into r_id FROM `room` WHERE `key` = r_key;
 RETURN r_id;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `user_id_exists` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" FUNCTION "user_id_exists"(u_id INT) RETURNS tinyint(1)
+CREATE FUNCTION `user_id_exists`(u_id INT) RETURNS tinyint(1)
 BEGIN
 
 IF EXISTS(SELECT * FROM `user` WHERE `id` = u_id)
@@ -398,21 +239,9 @@ END IF;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `assign_room_questions` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "assign_room_questions"(r_id INT, cat_id INT, num_q INT)
+CREATE PROCEDURE `assign_room_questions`(r_id INT, cat_id INT, num_q INT)
 BEGIN
 DECLARE num_q_rows INT;
 
@@ -443,118 +272,46 @@ UPDATE `room` SET `num_questions` = num_q_rows WHERE `id` = r_id;
 DROP TABLE `questions_for_room`;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `destroy_room_id` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "destroy_room_id"(r_id INT)
+CREATE PROCEDURE `destroy_room_id`(r_id INT)
 BEGIN
 UPDATE `room` SET `key` = NULL, `ended` = true WHERE `id` = r_id;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `destroy_room_key` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "destroy_room_key"(r_key VARCHAR(6))
+CREATE PROCEDURE `destroy_room_key`(r_key VARCHAR(6))
 BEGIN
 UPDATE `room` SET `key` = NULL, `ended` = true WHERE `key` = r_key;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_room_scores` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "get_room_scores"(r_id INT)
+CREATE PROCEDURE `get_room_scores`(r_id INT)
 BEGIN
 	SELECT u.`id`, u.`name`, u.`score` FROM `user` AS u 
     LEFT JOIN `room_users` AS ru ON u.`id` = ru.`user_id`
     WHERE ru.`room_id` = r_id;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `increment_room_question` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "increment_room_question"(r_id INT)
+CREATE PROCEDURE `increment_room_question`(r_id INT)
 BEGIN
 UPDATE `room` SET `current_question` = `current_question` + 1 WHERE `id` = r_id;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `increment_score` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "increment_score"(u_id INT, inc INT)
+CREATE PROCEDURE `increment_score`(u_id INT, inc INT)
 BEGIN
 UPDATE `user` SET `score` = `score` + inc WHERE `id` = u_id;
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `retrieve_current_question` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ONLY_FULL_GROUP_BY,ANSI,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+
 DELIMITER ;;
-CREATE DEFINER="doadmin"@"%" PROCEDURE "retrieve_current_question"(r_id INT)
+CREATE PROCEDURE `retrieve_current_question`(r_id INT)
 BEGIN
 
 SELECT `q`.`id`, `q`.`text` FROM `question` AS `q` 
@@ -564,19 +321,4 @@ SELECT `q`.`id`, `q`.`text` FROM `question` AS `q`
     
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-10-15 18:57:45
