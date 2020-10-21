@@ -40,7 +40,8 @@ export class RoomRoute {
                 const roomID = await db.getRoomIdFromKey(roomKey);
 
                 // default current_question is 0 but the ordering starts at 1 so incrementing
-                await db.incrementRoomQuestion(roomID);
+                const currQ = await (await db.getQuestionIndex(roomID)).index;
+                if (currQ === '0') await db.incrementRoomQuestion(roomID);
 
                 // assign 10 random questions ro the room
                 // "1" refers to the category ID. TODO change it

@@ -7,7 +7,7 @@ import { Db } from '../db/db';
 import { Server } from '../server/server';
 
 /*tslint:disable: no-unused-expression */
-describe('Question Route Test', () => {
+describe('Scores Route Test', () => {
 
     let server: Server;
     let db: Db;
@@ -51,7 +51,6 @@ describe('Question Route Test', () => {
         await db.addUserToRoom(userID, roomID);
     })
 
-    //will need to fill the db with dummy questions for this one
     it('should get one score with 0 pts at first', async () => {
         
         expect(userID).not.empty;
