@@ -35,13 +35,16 @@ export class RoomRoute {
             const userID = req.header('user-id');
             try {
                 // make a room and get a room key
-                const roomKey: string = await db.newRoom();
-                
+                const roomKeyN: number = await db.newRoom();
+
+                // converting to 6 digit in case we get a number with fewer digits from the db
+                const roomKey: string = roomKeyN.toLocaleString(undefined,
+                    { minimumIntegerDigits: RoomRoute.ROOM_KEY_LENGTH });
+
                 const roomID = await db.getRoomIdFromKey(roomKey);
 
                 // default current_question is 0 but the ordering starts at 1 so incrementing
-                const currQ = await (await db.getQuestionIndex(roomID)).index;
-                if (currQ === '0') await db.incrementRoomQuestion(roomID);
+                await db.incrementRoomQuestion(roomID);
 
                 // assign 10 random questions ro the room
                 // "1" refers to the category ID. TODO change it

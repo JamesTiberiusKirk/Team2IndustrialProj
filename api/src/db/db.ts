@@ -1,4 +1,4 @@
-import { createConnection, Connection, ConnectionOptions, RowDataPacket, OkPacket } from 'mysql';
+import { createConnection, Connection, ConnectionOptions, RowDataPacket } from 'mysql';
 import { Question, Answer, QuestionIndex } from '../models/question.model';
 import { Score } from '../models/score.model';
 
@@ -73,16 +73,15 @@ export class Db {
      * Creates new room.
      * @returns room_key. Returning as a number because converting elsewhere, need 6 digits
      */
-    newRoom(): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
+    newRoom(): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
             const sql: string = 'SELECT new_room() AS room_key;';
             this.conn.query(sql, (err, rows: RowDataPacket[]) => {
-                if (err) return reject(err);
+                if (err) reject(err);
                 try {
-                    // type of room key in db is string
-                    return resolve(rows[0].room_key);
+                    resolve(rows[0].room_key);
                 } catch (e) {
-                    return reject(e);
+                    reject(e);
                 }
             });
         });
@@ -164,7 +163,7 @@ export class Db {
             this.conn.query(sql, [id], ((err, rows: RowDataPacket[]) => {
                 if (err) reject(err);
                 try {
-                    resolve(Boolean(rows[0].result));
+                    resolve(rows[0].result);
                 } catch (e) {
                     reject(e);
                 }
@@ -324,7 +323,7 @@ export class Db {
                 try {
                     const result: Answer[] = [] as Answer[];
                     rows.forEach(r => {
-                        result.push({ id: String(r.id), text: String(r.text) });
+                        result.push({ id: String(r.id), text: r.text });
                     });
                     resolve(result);
                 } catch (e) {
@@ -347,10 +346,7 @@ export class Db {
             this.conn.query(sql, [roomId], (err, rows: RowDataPacket[]) => {
                 if(err)reject(err);
                 try{
-                    resolve({
-                        outOf: String(rows[0].num_questions), 
-                        index: String(rows[0].current_question)
-                    });
+                    resolve({outOf:rows[0].num_questions, index: rows[0].current_question});
                 }catch(e){
                     reject(e);
                 }
@@ -383,29 +379,4 @@ export class Db {
         })
     }
 
-    addQuestion(question: string, answers: string[], correctIndex: number): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            const sqlQ = 'INSERT INTO question (text, category_id) VALUES (?, ?)';
-            this.conn.query(sqlQ, [question, 1], (err, rows: OkPacket) => {
-                if (err) return reject(err);
-                // question added, now on to answers
-                const qID: number = rows.insertId;
-                const sqlA = 'INSERT INTO answer (text, correct, question_id) VALUES ?';
-                let values = [];
-                for (let i = 0; i < answers.length; i++) {
-                    const ans = answers[i];
-                    values.push([ 
-                        ans, 
-                        Number(i === correctIndex),
-                        qID
-                    ]);           
-                }
-
-                this.conn.query(sqlA, [values], (errA, rowsA) => {
-                    if (errA) return reject(errA);
-                    return resolve();
-                })
-            })
-        })
-    }
 }

@@ -31,11 +31,6 @@ describe('Server Test', () => {
         });
     });
 
-    after((done) => {
-        server.httpServer.close();
-        done();
-    });
-
     it('should GET /', async () => {
         const res = await request(server.app)
             .get('/');
