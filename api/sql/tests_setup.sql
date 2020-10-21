@@ -163,7 +163,7 @@ DECLARE genrated BOOLEAN;
 DECLARE room_key VARCHAR(6);
 
 SET genrated = 0;
-SET room_key = 000000;
+SET room_key = LPAD((SELECT CONVERT( FLOOR(RAND() * 1000000 ), CHAR(6))),6,0);
 
 WHILE genrated = 0
 DO
