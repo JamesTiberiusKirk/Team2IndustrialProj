@@ -82,10 +82,9 @@ describe('Question Route Test', () => {
         expect(res.body.answers).not.null;
         expect(res.body.answers.length).eq(4);
 
-        for (let i = 0; i < res.body.answers.length; i++) {
-            const ans = res.body.answers[i];
+        for (const ans of res.body.answers) {
             expect(ans.id).not.empty;
-            expect(ans.text).not.empty;
+            expect(ans.text).not.empty;            
         }
 
         question = res.body.question;
