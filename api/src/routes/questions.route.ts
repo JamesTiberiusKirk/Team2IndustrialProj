@@ -25,9 +25,9 @@ export class QuestionsRoute {
             const roomId = req.header('room-id');
             try {
                 const questionIndex: QuestionIndex = await db.getQuestionIndex(roomId);
-                if (questionIndex.index >= questionIndex.outOf) {
+                if (questionIndex.index > questionIndex.outOf) {
                     await db.destroyRoomById(roomId);
-                    return res.status(400).send('last question was reached');
+                    return res.status(204).send('last question was reached');
                 }
 
                 // only sending the current question, not moving on to the next one until answered

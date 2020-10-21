@@ -10,6 +10,7 @@ import { QuestionsRoute } from '../routes/questions.route';
 import { RoomRoute } from '../routes/room.route';
 import { ScoresRoute } from '../routes/scores.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
+import { Server as HttpServer} from 'http';
 
 export class Server {
 
@@ -21,6 +22,8 @@ export class Server {
 
     /* The db client */
     db: Db;
+
+    httpServer : HttpServer;
 
     /**
      * Constructor.
@@ -39,12 +42,23 @@ export class Server {
      */
     initServer(): Promise<void> {
         return new Promise((resolve) => {
-            this.app.listen(this.conf.port, () => {
+            this.httpServer = this.app.listen(this.conf.port, () => {
                 // tslint:disable-next-line:no-console
                 console.log(`server started at http://localhost:${this.conf.port}`);
                 resolve();
             });
         });
+    }
+    closeServer() :Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.httpServer.close((err) => {
+                if (err) return reject(err);
+                //tslint:disable-next-line:no-console
+                console.log(`closed server at http://localhost:${this.conf.port}`);
+                resolve();
+            });
+
+        })
     }
 
     /**
