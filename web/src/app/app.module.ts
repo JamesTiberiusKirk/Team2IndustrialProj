@@ -10,6 +10,8 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { RegisterComponent } from './register/register.component';
 import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
 import { ResultComponent } from './result/result.component';
+import { QuizService } from './services/quiz.service';
+import { QuizComponent } from '../../angular-test/src/app/quiz/quiz.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,7 @@ import { ResultComponent } from './result/result.component';
     ResultComponent,
   ],
   exports: [],
-  providers: [HttpClient, QuizQuestionsComponent],
+  providers: [HttpClient, QuizService, QuizQuestionsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
   roomID: string;
 
   constructor(private route: Router, private rest: RestService, private quiz: QuizQuestionsComponent) { }
-
   ngOnInit() { }
 
   onSubmit(nick: string) {
@@ -27,15 +26,13 @@ export class RegisterComponent implements OnInit {
         this.roomID = data.room_id.toString();
         this.roomKey = data.room_key.toString();
 
-        this.rest.joinRoom(this.userID, this.roomKey);//.subscribe((data) => { console.log(data) } );
-
-        this.rest.getNextQuestion(this.roomID, this.userID).subscribe((data) => { console.log(data) })
-
-        //this.rest.getNextQuestion('236', '330').subscribe((data) => { console.log(data) });
-
-        //this.quiz.beginQuiz(this.roomID, this.userID);
+        this.rest.joinRoom(this.userID, this.roomKey).subscribe((data) => {
+          this.quiz.startQuiz(this.roomID, this.userID);
+        })
       })
     })
+
+    this.route.navigate(['/quiz-questions']);
   }
 
 }
