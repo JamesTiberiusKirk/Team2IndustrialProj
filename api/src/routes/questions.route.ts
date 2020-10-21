@@ -74,5 +74,43 @@ export class QuestionsRoute {
                 return res.sendStatus(500);
             }
         });
+
+        // Init route for multiplayer answer
+        this.router.post('/answerNoInc', async (req: Request, res: Response) => {
+            const db: Db = res.locals.db;
+            const qid: string = req.body.qid;
+            const aid = req.body.aid;
+            const uid = req.header('user-id');
+            const rid = req.header('room-id');
+
+            try {
+                // first check the current question matches
+                const currQ: Question = await db.getCurrentQuestion(rid);
+                if (qid !== String(currQ.id)) {
+                    // answer request was sent for a different question
+                    return res.status(400).send("not the current question");
+                }
+
+                const wasRight: boolean = Boolean(await db.checkAnswer(qid, aid));
+
+                // move on to the next question in the db
+                // await db.incrementRoomQuestion(rid);
+                await db.setAnswered(rid, true);
+
+                if (wasRight === null) {
+                    return res.sendStatus(400);
+                } else {
+                    if (wasRight) {
+                        db.incrementScore(uid, 1);
+                    }
+                    const result: AnswerResultResponse = { correct: wasRight };
+                    return res.send(result);
+                }
+            } catch (error) {
+                return res.sendStatus(500);
+            }
+        });
+
+        
     }
 }

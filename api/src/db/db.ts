@@ -1,5 +1,6 @@
 import { createConnection, Connection, ConnectionOptions, RowDataPacket } from 'mysql';
 import { Question, Answer, QuestionIndex } from '../models/question.model';
+import { UserResponse } from '../models/user.model';
 import { Score } from '../models/score.model';
 
 export class Db {
@@ -372,6 +373,57 @@ export class Db {
                             score: String(r.score) });
                     });
                     resolve(result);
+                } catch(e) {
+                    reject(e);
+                }
+            })
+        })
+    }
+
+    getUsersInRoom(roomId: string) : Promise<UserResponse[]> {
+        return new Promise<UserResponse[]>((resolve, reject) => {
+            const sql: string = 'SELECT user.id, user.name FROM user \
+            INNER JOIN room_users ON user.id=room_users.user_id \
+            WHERE room_users.room_id=?';
+            this.conn.query(sql, [roomId], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    const result: UserResponse[] = [] as UserResponse[];
+                    rows.forEach(r => {
+                        result.push({ 
+                            user_id: String(r.id), 
+                            nick: String(r.name)
+                        });
+                    });
+                    resolve(result);
+                } catch(e) {
+                    reject(e);
+                }
+            })
+        })
+    }
+
+    setAnswered(roomId: string, ans: boolean) :Promise<any>{
+        return new Promise<any> ((resolve, reject) => {
+            const sql: string = 'UPDATE room SET answered=? WHERE id=?';
+            this.conn.query(sql, [ans, roomId], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    resolve();
+                } catch(e) {
+                    reject(e);
+                }
+            })
+        })
+    }
+
+    getAnswered(roomId: string) :Promise<boolean>{
+        return new Promise<any> ((resolve, reject) => {
+            const sql: string = 'SELECT answered FROM room WHERE id=?';
+            this.conn.query(sql, [roomId], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    resolve(Boolean(rows[0].answered));
                 } catch(e) {
                     reject(e);
                 }

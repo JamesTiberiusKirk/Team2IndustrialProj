@@ -64,6 +64,7 @@ CREATE TABLE `room` (
   `current_question` int DEFAULT '0',
   `category_id` int unsigned DEFAULT NULL,
   `num_questions` int DEFAULT NULL,
+  `answered` boolean DEFAULT 'false',
   PRIMARY KEY (`id`),
   UNIQUE KEY `key_UNIQUE` (`key`),
   KEY `room_category_id` (`category_id`),

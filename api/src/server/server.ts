@@ -9,6 +9,7 @@ import { RegisterRoute } from '../routes/register.route';
 import { QuestionsRoute } from '../routes/questions.route';
 import { RoomRoute } from '../routes/room.route';
 import { ScoresRoute } from '../routes/scores.route';
+import { SseRoute } from '../routes/sse.route';
 import { checkUserIdMiddleware } from '../middleware/userid-auth.middleware';
 
 export class Server {
@@ -66,7 +67,10 @@ export class Server {
         // Init the scores router.
         const scoresRoute = new ScoresRoute();
         this.app.use('/scores', checkUserIdMiddleware, scoresRoute.router);
-
+        
+        const sseRoute = new SseRoute();
+        this.app.use('/sse', sseRoute.router);
+        
         // TEMP
         this.app.get('/', (req,res)=>{
             res.send('Hello World');

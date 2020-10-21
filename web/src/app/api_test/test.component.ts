@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../services/rest.service';
+import { SseService } from '../services/sse.service';
 
 @Component({
   selector: 'app-test',
@@ -15,7 +16,8 @@ export class TestComponent {
   questionID: string;
   answer1ID: string;
 
-  constructor(private rest: RestService) { }
+  // constructor(private rest: RestService) { }
+  constructor(private rest: RestService, private sse: SseService) { }
 
   testRegister() {
     this.rest.register("test335").subscribe((data) => {
@@ -66,6 +68,16 @@ export class TestComponent {
     this.rest.getScores(this.roomID, this.userID).subscribe((data) => {
       // console.log(data);
       // console.log("the highest score was " + data.scores[0].score + " by " + data.scores[0].nick);
+    })
+  }
+
+  testRoomCreatedSSE() {
+    // this.roomID = "123456";
+    // this.roomID = "391209";
+    this.sse.roomCreated(this.roomID).subscribe((message) => {
+      const data = JSON.parse(message.data);
+      console.log(data);
+      // console.log(data.message.data);
     })
   }
 
