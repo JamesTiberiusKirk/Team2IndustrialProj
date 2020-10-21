@@ -27,7 +27,9 @@ export class RegisterComponent implements OnInit {
         this.roomKey = data.room_key.toString();
 
         this.rest.joinRoom(this.userID, this.roomKey).subscribe((data) => {
-          this.quiz.startQuiz(this.roomID, this.userID);
+          //for (var i = 0; i < 8; i++){
+            this.quiz.startQuiz(this.roomID, this.userID);
+          //}
         })
       })
     })
