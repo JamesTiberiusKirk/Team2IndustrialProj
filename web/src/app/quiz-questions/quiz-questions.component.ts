@@ -9,18 +9,17 @@ import { RestService } from '../services/rest.service';
   styleUrls: ['../app.component.css']
 })
 export class QuizQuestionsComponent {
-  question: string;
 
   constructor(private router: Router, private rest: RestService) { }
 
   startQuiz(roomId: string, userId: string) {
     this.rest.getNextQuestion(roomId, userId).subscribe((data) => {
-      this.getQ(data.question.text);
+      this.setQ(data.question.text);
     });
   }
 
-  getQ(q: string) {
-    this.question = q;
-    console.log(this.question);
+  setQ(q: string) {
+    var question = document.getElementById('q');
+    question.innerHTML = q;
   }
 }
