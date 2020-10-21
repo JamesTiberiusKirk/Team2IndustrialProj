@@ -91,7 +91,6 @@
 
 #buttonD {
   background-color: rgb(177, 129, 255);
-  ;
   border-radius: 5px;
   border: none;
   color: rgb(0, 0, 0);
@@ -108,7 +107,6 @@
 
   #buttonD:hover {
     background-color: rgb(159, 100, 255);
-    ;
     box-shadow: 0 0 20px 0 #000;
   }
 

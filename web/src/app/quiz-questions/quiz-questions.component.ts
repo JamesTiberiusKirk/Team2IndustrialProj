@@ -6,7 +6,7 @@ import { Question } from '../question';
 @Component({
   selector: 'app-quiz-questions',
   templateUrl: './quiz-questions.component.html',
-  styleUrls: ['../app.component.css']
+  styleUrls: ['../app.component.css', './quiz-questions.component.css']
 })
 export class QuizQuestionsComponent {
 
