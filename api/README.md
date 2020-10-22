@@ -156,7 +156,10 @@ Status Code:
 Body:
 ```json
 {
-    "correct": true
+    "correct": true,
+    "correct_answer":"1234",
+    "correct_answer_text":"this is the correct answer",
+    "score":"50"
 }
 ```
 (or false if incorrect)
