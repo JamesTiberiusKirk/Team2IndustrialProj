@@ -76,6 +76,7 @@ export class QuizQuestionsComponent {
       if (data == null) {
         this.rest.getScores(roomID, userID).subscribe((data) => {
           this.res.displayResults(data.scores[0].score, data.scores[0].nick);
+          this.router.navigate(['/result']);
         });
       } else {
         var q: Question = {

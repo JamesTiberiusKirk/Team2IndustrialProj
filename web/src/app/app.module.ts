@@ -28,7 +28,7 @@ import { QuizComponent } from '../../angular-test/src/app/quiz/quiz.component';
     ResultComponent,
   ],
   exports: [],
-  providers: [HttpClient, QuizService, QuizQuestionsComponent],
+  providers: [HttpClient, QuizService, QuizQuestionsComponent, ResultComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
