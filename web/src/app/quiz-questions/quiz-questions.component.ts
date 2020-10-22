@@ -66,10 +66,8 @@ export class QuizQuestionsComponent {
     var qID = x[3]
 
     this.rest.postAnswer(roomID, userID, qID, ansID).subscribe((data) => {
-      console.log(data);
       this.nextQ(roomID, userID);
     });
-    //console.log(ansID, roomID, userID, qID);
   }
 
   nextQ(roomID: string, userID: string) {
