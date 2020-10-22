@@ -114,7 +114,7 @@ Body:
     "question":{
         "id": 123,
         "text":"What is this question?",
-    }
+    },
     "answer_options":[
         {"id":431, "text":"answer1"},
         {"id":432, "text":"answer2"},
@@ -194,6 +194,50 @@ Body:
             "user_id": 456,
             "nick": "user2",
             "score": 10
+        }
+    ]
+}
+```
+
+
+## Get Leaderboard Request
+- `GET /scores/leaderboard`
+- This endpoint is for retrieving the top 10 scores ever, ordered by score descending
+
+### Request
+
+Headers:
+```
+user-id:    1234
+room-id:    123
+```
+
+### Response
+Status Code:
+- 200 SUCCESSFUL
+- 400 user error
+    - user_id or room_id headers might be missing
+- 401 user not in room
+- 500 something went wrong
+
+Body:
+```json
+{
+    "scores": [
+        {
+            "user_id": 123,
+            "nick": "user1",
+            "score": 8
+        },
+        {
+            "user_id": 456,
+            "nick": "user2",
+            "score": 6
+        },
+        {
+            "user_id": 789,
+            "nick": "8 more scores in the array",
+            "score": 1
         }
     ]
 }

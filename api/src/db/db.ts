@@ -408,4 +408,26 @@ export class Db {
             })
         })
     }
+    /**
+     * @param howMany how many scores to return
+     * @returns an ordered array of the top 'howMany' scores
+     */
+    getTopNScores(howMany: number): Promise<Score[]> {
+        return new Promise<Score[]>((resolve, reject) => {
+            const sql: string = 'SELECT id, name, score FROM user ORDER BY score DESC LIMIT ?';
+            this.conn.query(sql, [howMany], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    const result: Score[] = [] as Score[];
+                    rows.forEach(r => {
+                        result.push({ user_id: r.id, nick: r.name, score: r.score });
+                    });
+                    resolve(result);
+                } catch(e) {
+                    reject(e);
+                }
+            })
+        })
+    }
+
 }
