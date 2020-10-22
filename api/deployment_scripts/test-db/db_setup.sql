@@ -61,7 +61,7 @@ CREATE TABLE `room` (
   `key` varchar(6) DEFAULT NULL,
   `private` tinyint DEFAULT NULL,
   `ended` tinyint DEFAULT '0',
-  `current_question` int DEFAULT '0',
+  `current_question` int DEFAULT '1',
   `category_id` int unsigned DEFAULT NULL,
   `num_questions` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -165,7 +165,7 @@ DECLARE genrated BOOLEAN;
 DECLARE room_key VARCHAR(6);
 
 SET genrated = 0;
-SET room_key = 000000;
+SET room_key = LPAD((SELECT CONVERT( FLOOR(RAND() * 1000000 ), CHAR(6))),6,0);
 
 WHILE genrated = 0
 DO

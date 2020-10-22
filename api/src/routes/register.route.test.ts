@@ -4,13 +4,13 @@ import dotenv from 'dotenv';
 import { ConnectionOptions } from 'mysql';
 
 import { Db } from '../db/db';
-import { Server } from './server';
+import { Server } from '../server/server';
 
 /*tslint:disable: no-unused-expression */
-describe('Server Test', () => {
+describe('Register Route Test', () => {
 
     let server: Server;
-    let db: Db;
+    let db :Db;
 
     before((done) => {
 
@@ -36,12 +36,14 @@ describe('Server Test', () => {
         done();
     });
 
-    it('should GET /', async () => {
+    it('should register a new user and send back its info', async () => {
         const res = await request(server.app)
-            .get('/');
+            .post('/register/new_user')
+            .send({ 'nick': 'test_nick'});
 
         expect(res.status).to.equal(200);
-        expect(res.text).not.to.be.empty;
-        expect(res.text).to.be.equal('Hello World');
+        expect(res.body).not.to.be.empty;
+        expect(res.body.nick).to.be.equal('test_nick');
+        expect(await db.ifUserIdExist(res.body.user_id)).to.be.true;
     });
 });
