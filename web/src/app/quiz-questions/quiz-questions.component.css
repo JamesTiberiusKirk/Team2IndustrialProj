@@ -125,3 +125,29 @@ button {
   float: right;
   font-size: 24px;
 }
+#h2 {
+  margin: 1em 0 0.5em 0;
+  color: #343434;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 40px;
+  font-family: 'Orienta', sans-serif;
+}
+
+#h3 {
+  margin: 1em 0 0.5em 0;
+  color: #343434;
+  font-size: 22px;
+  line-height: 40px;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-family: 'Orienta', sans-serif;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+#score-counter {
+  text-align: right;
+  padding-right: 2%;
+  padding-top: 2%;
+  font-size: 20px;
+}

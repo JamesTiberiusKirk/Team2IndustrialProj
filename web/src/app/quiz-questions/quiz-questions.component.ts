@@ -51,6 +51,14 @@ export class QuizQuestionsComponent {
     question.innerHTML = q;
   }
 
+  getScore(roomID: string, userID: string) {
+    this.rest.getScores(roomID, userID).subscribe((currscore) => {
+      var currentscore = "ScorePlaceholder";
+      var scoreComp = document.getElementById("score-counter");
+      console.log(scoreComp);
+      scoreComp.innerHTML = ('score' + currentscore);
+    })
+  }
   /**
    * Displays options/answers
    * @param op1 - first option/answer
@@ -65,6 +73,7 @@ export class QuizQuestionsComponent {
    * @param userId - ID of user
    * @param qId - ID of question displayed
    */
+
   getOptions(op1: string, op2: string, op3: string, op4: string,
     op1Id: string, op2Id: string, op3Id: string, op4Id: string,
     roomId: string, userId: string, qId: string) {
