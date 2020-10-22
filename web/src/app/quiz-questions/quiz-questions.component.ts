@@ -74,9 +74,8 @@ export class QuizQuestionsComponent {
   nextQ(roomID: string, userID: string) {
     this.rest.getNextQuestion(roomID, userID).subscribe((data) => {
       if (data == null) {
-        this.rest.getScores(roomID, userID).subscribe((data) => {
-          this.res.displayResults(data.scores[0].score, data.scores[0].nick);
-        });
+          this.res.getResults(roomID, userID);
+          this.router.navigate(['/result']);
       } else {
         var q: Question = {
           qs: data.question.text,
