@@ -31,5 +31,17 @@ export class ScoresRoute {
                 return res.sendStatus(500);
             }
         });
+
+        this.router.get('/leaderboard', async (req: Request, res: Response) => {
+            const db: Db = res.locals.db;
+            try {
+                //get top 10 scores
+                const dbScores: Score[] = await db.getTopNScores(10);
+                let result: ScoresResponse = {scores: dbScores};
+                return res.send(result);
+            } catch (error) {
+                return res.sendStatus(500);
+            }
+        });
     }
 }
