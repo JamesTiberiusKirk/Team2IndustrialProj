@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { RestService } from '../services/rest.service';
 
 import { Question } from '../question';
+import { ResultComponent } from '../result/result.component';
 
 @Component({
   selector: 'app-quiz-questions',
@@ -12,7 +13,7 @@ import { Question } from '../question';
 })
 export class QuizQuestionsComponent {
 
-  constructor(private router: Router, private rest: RestService) { }
+  constructor(private router: Router, private rest: RestService, private res: ResultComponent) { }
 
   startQuiz(roomId: string, userId: string) {
    
@@ -72,17 +73,23 @@ export class QuizQuestionsComponent {
 
   nextQ(roomID: string, userID: string) {
     this.rest.getNextQuestion(roomID, userID).subscribe((data) => {
-      var q: Question = {
-        qs: data.question.text,
-        ans1: data.answers[0].text,
-        ans2: data.answers[1].text,
-        ans3: data.answers[2].text,
-        ans4: data.answers[3].text,
-      }
+      if (data == null) {
+        this.rest.getScores(roomID, userID).subscribe((data) => {
+          this.res.displayResults(data.scores[0].score, data.scores[0].nick);
+        });
+      } else {
+        var q: Question = {
+          qs: data.question.text,
+          ans1: data.answers[0].text,
+          ans2: data.answers[1].text,
+          ans3: data.answers[2].text,
+          ans4: data.answers[3].text,
+        }
 
-      this.setQ(q.qs);
-      this.getOptions(q.ans1, q.ans2, q.ans3, q.ans4,
-        data.answers[0].id, data.answers[1].id, data.answers[2].id, data.answers[3].id, roomID, userID, data.question.id);
+        this.setQ(q.qs);
+        this.getOptions(q.ans1, q.ans2, q.ans3, q.ans4,
+          data.answers[0].id, data.answers[1].id, data.answers[2].id, data.answers[3].id, roomID, userID, data.question.id);
+      }
     });
   }
 }

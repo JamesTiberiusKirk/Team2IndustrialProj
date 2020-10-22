@@ -11,13 +11,16 @@ export class ResultComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    /*var s = document.getElementById('score');
+    console.log(s);*/
+  }
+
+  displayResults(score: number, nick: string) {
+    var s = document.getElementById('score');
+    console.log(s);
   }
 
   onSubmit() {
-    this.restart();
-  }
-
-  restart() {
     this.router.navigate(['/register']);
   }
 
