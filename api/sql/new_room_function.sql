@@ -6,7 +6,7 @@ DECLARE genrated BOOLEAN;
 DECLARE room_key VARCHAR(6);
 
 SET genrated = 0;
-SET room_key = 000000;
+SET room_key = LPAD((SELECT CONVERT( FLOOR(RAND() * 1000000 ), CHAR(6))),6,0);
 
 WHILE genrated = 0
 DO
@@ -15,7 +15,7 @@ DO
     INSERT `room`(`key`) SELECT room_key;
     SET genrated = 1; 
   ELSE
-	  SET room_key = LPAD((SELECT CONVERT(((RAND() * 1000000)+ 1), CHAR(6))),6,0);
+	  SET room_key = LPAD((SELECT CONVERT( FLOOR(RAND() * 1000000 ), CHAR(6))),6,0);
       SET genrated = 0;
   END IF;
 END WHILE;

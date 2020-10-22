@@ -32,13 +32,13 @@ DROP TABLE IF EXISTS `answer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `answer` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `text` varchar(128) NOT NULL,
+  `text` varchar(256) NOT NULL,
   `correct` tinyint NOT NULL,
   `question_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `question_id_idx` (`question_id`),
   CONSTRAINT `question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1 COMMENT='Stores the answers to the questions, whether it is a correct answer and what questions it is an answer to';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='Stores the answers to the questions, whether it is a correct answer and what questions it is an answer to';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `category` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Stores the question categories';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='Stores the question categories';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `question` (
   PRIMARY KEY (`id`),
   KEY `category_id_idx` (`category_id`),
   CONSTRAINT `question_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

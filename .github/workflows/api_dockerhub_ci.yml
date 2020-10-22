@@ -20,14 +20,14 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-    
-    - name: Setup Dependencies
-      working-directory: ./api
-      run: npm install
 
     - name: Initialise Docker Test Db
       working-directory: ./api/deployment_scripts/
       run: ./test_db_start.sh
+
+    - name: Setup Dependencies
+      working-directory: ./api
+      run: npm install
 
     - name: Run Test
       working-directory: ./api
