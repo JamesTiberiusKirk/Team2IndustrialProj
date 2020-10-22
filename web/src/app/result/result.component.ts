@@ -13,11 +13,13 @@ export class ResultComponent implements OnInit {
   ngOnInit(): void {
     /*var s = document.getElementById('score');
     console.log(s);*/
+    this.displayResults(3, "bob");
   }
 
   displayResults(score: number, nick: string) {
-    var s = document.getElementById('score');
+    var s = document.getElementById('score ');
     console.log(s);
+    s.innerHTML = "4";
   }
 
   onSubmit() {
