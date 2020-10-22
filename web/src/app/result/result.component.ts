@@ -14,12 +14,22 @@ export class ResultComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  /**
+   * Gets final score
+   * @param roomID - ID of room player is in
+   * @param userID - ID of user
+   */
   getResults(roomID: string, userID: string) {
     this.rest.getScores(roomID, userID).subscribe((data) => {
       this.displayResults(data.scores[0].score, data.scores[0].nick);
     });
   }
 
+  /**
+   * Displays final score
+   * @param score - player's score after finishing quiz
+   * @param nick - player's username entered at beginning of game
+   */
   displayResults(score: number, nick: string) {
     var nickNode = document.createTextNode(nick);
     var scoreNode = document.createTextNode(score.toString());
@@ -31,6 +41,10 @@ export class ResultComponent implements OnInit {
     scoreDisplay.replaceChild(scoreNode, scoreDisplay.childNodes[0]);
   }
 
+  /**
+   * When player/user clicks 'submit' button,
+   * brings user/player back to registration page
+   */
   onSubmit() {
     this.router.navigate(['/register']);
   }
