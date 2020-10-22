@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\web",
+    "\\web\\src",
+    "\\web\\src\\app",
+    "\\web\\src\\app\\quiz-questions",
+    "\\web\\src\\app\\register",
+    "\\web\\src\\app\\services"
+  ],
+  "SelectedNode": "\\web\\src\\app\\quiz-questions\\quiz-questions.component.ts",
+  "PreviewInSolutionExplorer": false
+}

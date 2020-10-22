@@ -1,6 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { QuizQuestionsComponent } from '../quiz-questions/quiz-questions.component';
 
 import { RegisterComponent } from './register.component';
 
@@ -12,9 +14,15 @@ describe('RegisterComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FormsModule
+        FormsModule,
+        HttpClientTestingModule
       ],
-      declarations: [RegisterComponent]
+      providers: [
+        QuizQuestionsComponent
+      ],
+      declarations: [
+        RegisterComponent
+      ]
     })
       .compileComponents();
   });

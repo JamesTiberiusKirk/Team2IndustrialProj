@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { RestService } from '../services/rest.service';
 import { QuizQuestionsComponent } from './quiz-questions.component';
 
 describe('QuizQuestionsComponent', () => {
@@ -8,6 +9,9 @@ describe('QuizQuestionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        HttpClientTestingModule
+      ],
       declarations: [ QuizQuestionsComponent ]
     })
     .compileComponents();

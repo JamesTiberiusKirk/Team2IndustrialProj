@@ -1,19 +1,17 @@
-<app-navbar></app-navbar>
+
 <body>
-  <p>Score:4</p>
-<div class="quiz-container">
-  
-  <h2>{{question.qs}}</h2>
-</div>
+  <div class="card blue-grey darken-1">
+    <div class="quiz-container">
+      <h2 id="q" style="text-align: center"> </h2>
+     </div>
+    <div class="card-action">
+      <div class="answer-container">
+        <button id="op1" value="ans1" (click)="opChosen($event.target.name)"></button>
+        <button id="op2" value="ans2" (click)="opChosen($event.target.name)"></button>
+        <button id="op3" value="ans3" (click)="opChosen($event.target.name)"></button>
+        <button id="op4" value="ans4" (click)="opChosen($event.target.name)"></button>
 
-  <div class="answer-container">
-  <input type="button" id="buttonA" value={{question.ans1}}>
-  <input type="button" id="buttonB" value={{question.ans2}}>
-  <input type="button" id="buttonC" value={{question.ans3}}>
-  <input type="button" id="buttonD" value={{question.ans4}}>
-
-<button class="back" onclick="document.location='Back'">Back</button>
-<button class="next" onclick="document.location='Next'">Next</button>
-</div>    
-   
+      </div>
+    </div>
+  </div>
 </body>
