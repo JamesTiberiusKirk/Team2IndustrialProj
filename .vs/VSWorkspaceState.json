@@ -8,10 +8,6 @@
     "\\web\\src\\app\\register",
     "\\web\\src\\app\\services"
   ],
-<<<<<<< HEAD
-  "SelectedNode": "\\web\\src\\app\\quiz-questions\\quiz-questions.component.html",
-=======
   "SelectedNode": "\\web\\src\\app\\quiz-questions\\quiz-questions.component.ts",
->>>>>>> 7072dd00aac58818532c3565fa35e622a2e1d516
   "PreviewInSolutionExplorer": false
 }
