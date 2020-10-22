@@ -1,5 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ResultComponent } from '../result/result.component';
 import { RestService } from '../services/rest.service';
 import { QuizQuestionsComponent } from './quiz-questions.component';
 
@@ -10,7 +12,11 @@ describe('QuizQuestionsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers: [
+        ResultComponent
       ],
       declarations: [ QuizQuestionsComponent ]
     })

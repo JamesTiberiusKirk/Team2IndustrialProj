@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { QuizQuestionsComponent } from '../quiz-questions/quiz-questions.component';
+import { ResultComponent } from '../result/result.component';
 
 import { RegisterComponent } from './register.component';
 
@@ -18,7 +19,8 @@ describe('RegisterComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        QuizQuestionsComponent
+        QuizQuestionsComponent,
+        ResultComponent
       ],
       declarations: [
         RegisterComponent
