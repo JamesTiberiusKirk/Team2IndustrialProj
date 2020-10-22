@@ -1,17 +1,15 @@
-
 <body>
   <div class="card blue-grey darken-1">
-    <div class="quiz-container">
+    <div class="card-content white-text">
       <h2 id="q" style="text-align: center"> </h2>
      </div>
     <div class="card-action">
-      <div class="answer-container">
-        <button id="op1" value="ans1" (click)="opChosen($event.target.name)"></button>
-        <button id="op2" value="ans2" (click)="opChosen($event.target.name)"></button>
-        <button id="op3" value="ans3" (click)="opChosen($event.target.name)"></button>
-        <button id="op4" value="ans4" (click)="opChosen($event.target.name)"></button>
-
+        <ul class="collection answer">
+          <li id="op1" style="font-size: 50px; border: solid" (click)="opChosen($event.target.name)"></li>
+          <li id="op2" style="font-size: 50px; border: solid" (click)="opChosen($event.target.name)"></li>
+          <li id="op3" style="font-size: 50px; border: solid" (click)="opChosen($event.target.name)"></li>
+          <li id="op4" style="font-size: 50px; border: solid" (click)="opChosen($event.target.name)"></li>
+        </ul>
       </div>
     </div>
-  </div>
 </body>
