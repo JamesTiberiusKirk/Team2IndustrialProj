@@ -430,4 +430,42 @@ export class Db {
         })
     }
 
+    /**
+     * @param userId the user ID 
+     * @returns the users score
+     */
+    getUserScore(userId: string): Promise<Score> {
+        return new Promise<Score>((resolve, reject) => {
+            const sql: string = 'SELECT id, name, score FROM user WHERE id=?';
+            this.conn.query(sql, [userId], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try{
+                    const result: Score = {user_id:rows[0].id, nick:rows[0].name, score:rows[0].score};
+                    resolve(result);
+                } catch(e) {
+                    reject(e);
+                }
+            })
+        })
+    }
+
+    /**
+     * Gets the correct answer for a specific question.
+     * @param questionId question ID.
+     */
+    getCorrectAnswer(questionId: string): Promise<Answer> {
+        return new Promise<Answer>((resolve, reject) => {
+            const sql: string = 'SELECT answer.id, answer.text FROM answer WHERE answer.question_id=? and answer.correct=1;';
+            this.conn.query(sql, [questionId], (err, rows: RowDataPacket[]) => {
+                if (err) return reject(err);
+                try {
+                    const result: Answer = {id: String(rows[0].id), text: String(rows[0].text)};
+                    resolve(result);
+                } catch (e) {
+                    reject(e)
+                }
+            })
+        });
+    }
+
 }

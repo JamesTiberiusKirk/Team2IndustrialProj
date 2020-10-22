@@ -35,4 +35,7 @@ export interface QuestionIndex {
  */
 export interface AnswerResultResponse {
     correct: boolean;
+    correct_answer: string;
+    correct_answer_text: string;
+    score: string;
 }

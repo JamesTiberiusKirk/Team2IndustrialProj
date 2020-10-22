@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { AnswerResultResponse, QuestionAndAnswerResponse, QuestionIndex } from '../models/question.model';
+import { Score } from '../models/score.model'
 import { Db } from '../db/db';
 import { Answer, Question } from '../models/question.model';
 
@@ -65,9 +66,11 @@ export class QuestionsRoute {
                     return res.sendStatus(400);
                 } else {
                     if (wasRight) {
-                        db.incrementScore(uid, 1);
+                        await db.incrementScore(uid, 1);
                     }
-                    const result: AnswerResultResponse = { correct: wasRight };
+                    const score: Score = await db.getUserScore(uid);
+                    const answer: Answer = await db.getCorrectAnswer(qid);
+                    const result: AnswerResultResponse = { correct: wasRight, score: score.score, correct_answer: answer.id, correct_answer_text: answer.text} ;
                     return res.send(result);
                 }
             } catch (error) {
