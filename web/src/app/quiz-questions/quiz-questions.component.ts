@@ -9,7 +9,7 @@ import { ResultComponent } from '../result/result.component';
 @Component({
   selector: 'app-quiz-questions',
   templateUrl: './quiz-questions.component.html',
-  styleUrls: ['../app.component.css']
+  styleUrls: ['../app.component.css', './quiz-questions.component.css']
 })
 export class QuizQuestionsComponent {
 
@@ -49,6 +49,15 @@ export class QuizQuestionsComponent {
     //Used to display question on screen
     var question = document.getElementById('q');
     question.innerHTML = q;
+  }
+
+
+  getScore(roomID: string, userID: string) {
+    this.rest.getScores(roomID, userID).subscribe((currscore) => {
+      var currentscore = currscore.scores[0].score;
+      var scoreComp = document.getElementById("score-counter");
+      scoreComp.innerHTML = ('Score: ' + currentscore);
+    })
   }
 
   /**
@@ -112,6 +121,7 @@ export class QuizQuestionsComponent {
    */
   nextQ(roomID: string, userID: string) {
     this.rest.getNextQuestion(roomID, userID).subscribe((data) => {
+      this.getScore(roomID, userID);
       if (data == null) {
         //When no more questions to display, get user's score
         this.res.getResults(roomID, userID);
