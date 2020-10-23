@@ -8,8 +8,8 @@ import { RoomResponse } from '../models/room.model';
  */
 export class RoomRoute {
 
-    /* Changing this does nothing for now, DB procedure is hard-coded to 10. */
-    static readonly NUM_OF_QUESIONS: number = 8;
+    /* Number of questions to assign to a new room. */
+    static readonly NUM_OF_QUESIONS: number = 10;
 
     /* This should also be set somewhere else. */
     static readonly ROOM_KEY_LENGTH: number = 6;
