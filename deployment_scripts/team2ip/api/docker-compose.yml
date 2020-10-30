@@ -1,0 +1,16 @@
+version: "3.0"
+
+services:
+  api:
+    image: dumitruvulpe/team2ip:latest
+    ports:
+      - 3000:3000
+    restart: always
+    environment:
+      SERVER_PORT: 3000
+      DB_HOST: team2ipdb-do-user-649418-0.b.db.ondigitalocean.com
+      DB_PORT: 25060
+      DB_USER: api
+      #DB_NAME: defaultdb
+      DB_NAME: productiondb
+      DB_PASS: apitest1234

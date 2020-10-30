@@ -1,0 +1,9 @@
+version: "3.0"
+
+services:
+  web:
+    image: dumitruvulpe/team2ip-web:latest
+    ports:
+      - 80:80
+    restart: always
+
